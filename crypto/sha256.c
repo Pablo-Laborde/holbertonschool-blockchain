@@ -10,12 +10,9 @@
  */
 uint8_t *sha256(int8_t const *s, size_t len, uint8_t digest[SHA256_DIGEST_LENGTH])
 {
-	const EVP_MD *evp_md = NULL;
-
 	if (!digest)
 		return (NULL);
-	evp_md = EVP_sha256();
-	if (!EVP_Digest(s, len, digest, NULL, evp_md, NULL))
-		perror("Failed to digest.");
+	if (!SHA256((unsigned char *)s, len, digest))
+		perror("Failed to digest 'SHA256()'.");
 	return (digest);
 }
