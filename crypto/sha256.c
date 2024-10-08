@@ -13,6 +13,6 @@ uint8_t *sha256(int8_t const *s, size_t len, uint8_t digest[SHA256_DIGEST_LENGTH
 	if (!digest)
 		return (NULL);
 	if (!SHA256((unsigned char *)s, len, digest))
-		perror("Failed to digest 'SHA256()'.");
+		perror("Failed to digest 'SHA256()'.\n");
 	return (digest);
 }

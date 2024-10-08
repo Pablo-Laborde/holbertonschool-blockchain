@@ -2,12 +2,12 @@
 #define GRYPTO_H
 
 
-# include <openssl/sha.h>
-# include <openssl/evp.h>
-
+#include <openssl/sha.h>
+#include <openssl/ec.h>
+#include <openssl/obj_mac.h> /* Here is where NID_secp256k1 is defined */
 
 #include <errno.h>
-# include <stdint.h>
+#include <stdint.h>
 
 
 
@@ -38,6 +38,12 @@ typedef struct sig_s
 } sig_t;
 
 /* Functions */
-	uint8_t *sha256(int8_t const *s, size_t len, uint8_t digest[SHA256_DIGEST_LENGTH]);
+
+	/* sha256.c */
+		uint8_t *sha256(int8_t const *s, size_t len, uint8_t digest[SHA256_DIGEST_LENGTH]);
+
+	/* ec_create.c */
+		EC_KEY *ec_create(void);
+
 
 #endif
