@@ -9,6 +9,7 @@
  */
 uint8_t *ec_to_pub(EC_KEY const *key, uint8_t pub[EC_PUB_LEN])
 {
+	int i = 0 ;
 	char *buf = NULL;
 	const EC_GROUP *g = NULL;
 	const EC_POINT *p = NULL;
@@ -20,7 +21,8 @@ uint8_t *ec_to_pub(EC_KEY const *key, uint8_t pub[EC_PUB_LEN])
 	if (!g || !p)
 		return (NULL);
 	buf = EC_POINT_point2hex(g, p, POINT_CONVERSION_UNCOMPRESSED, NULL);
-	strcpy((char *)pub, buf);
+	for (; i < EC_PUB_LEN; i++)
+		pub[i] = buf[i];
 	OPENSSL_free(buf);
 	return (pub);
 }
