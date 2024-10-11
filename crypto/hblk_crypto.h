@@ -1,5 +1,5 @@
-#ifndef CRYPTO_H
-#define CRYPTO_H
+#ifndef HBLK_CRYPTO_H
+#define HBLK_CRYPTO_H
 
 
 #include <openssl/sha.h>
