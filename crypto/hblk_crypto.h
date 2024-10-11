@@ -25,7 +25,8 @@
  * struct sig_s - EC Signature structure
  *
  * @sig: Signature buffer. The whole space may not be used
- * @len: Actual signature size. Can't exceed SIG_MAX_LEN, therefore stored on a byte
+ * @len: Actual signature size. Can't exceed SIG_MAX_LEN,
+ * therefore stored on a byte
  */
 typedef struct sig_s
 {
@@ -38,9 +39,6 @@ typedef struct sig_s
 } sig_t;
 
 /* Functions */
-
-	/* provided */
-		void _print_hex_buffer(uint8_t const *buf, size_t len);
 
 	/* sha256.c */
 		uint8_t *sha256(int8_t const *s, size_t len,
