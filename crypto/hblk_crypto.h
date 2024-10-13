@@ -43,6 +43,7 @@ typedef struct sig_s
 	/* sha256.c */
 		uint8_t *sha256(int8_t const *s, size_t len,
 						uint8_t digest[SHA256_DIGEST_LENGTH]);
+		void *sha256_errors(int error);
 
 	/* ec_create.c */
 		EC_KEY *ec_create(void);
