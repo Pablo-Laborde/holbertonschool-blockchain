@@ -20,6 +20,7 @@ EC_KEY *ec_create(void)
 
 /**
  * ec_create_errors- func
+ * @error: int
  * Return: void *
  */
 void *ec_create_errors(int error)
