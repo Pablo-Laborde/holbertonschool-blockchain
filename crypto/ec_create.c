@@ -11,9 +11,9 @@ EC_KEY *ec_create(void)
 
 	key = EC_KEY_new_by_curve_name(EC_CURVE);
 	if (!key)
-		ec_create_errors(1);
+		return (ec_create_errors(1));
 	if (!EC_KEY_generate_key(key))
-		ec_create_errors(2);
+		return (ec_create_errors(2));
 	return (key);
 }
 

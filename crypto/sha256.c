@@ -12,9 +12,9 @@ uint8_t *sha256(int8_t const *s, size_t len,
 				uint8_t digest[SHA256_DIGEST_LENGTH])
 {
 	if (!digest)
-		sha256_errors(0);
+		return (sha256_errors(0));
 	if (!SHA256((unsigned char *)s, len, digest))
-		sha256_errors(1);
+		return (sha256_errors(1));
 	return (digest);
 }
 
