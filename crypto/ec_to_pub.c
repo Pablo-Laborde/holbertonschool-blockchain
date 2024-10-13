@@ -14,22 +14,13 @@ uint8_t *ec_to_pub(EC_KEY const *key, uint8_t pub[EC_PUB_LEN])
 	point_conversion_form_t f;
 
 	if (!key)
-	{
-		perror("No key passed.\n");
-		return (NULL);
-	}
+		return (ec_to_pub_errors(1));
 	g = EC_KEY_get0_group(key);
 	if (!g)
-	{
-		perror("Couldn't get group.\n");
-		return (NULL);
-	}
+		return (ec_to_pub_errors(2));
 	p = EC_KEY_get0_public_key(key);
 	if (!p)
-	{
-		perror("Couldn't get point.\n");
-		return (NULL);
-	}
+		return (ec_to_pub_errors(3));
 	f = EC_KEY_get_conv_form(key);
 	EC_POINT_point2oct(g, p, f, (unsigned char *)pub, EC_PUB_LEN, NULL);
 	return (pub);
