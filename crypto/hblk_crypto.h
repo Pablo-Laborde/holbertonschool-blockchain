@@ -51,6 +51,7 @@ typedef struct sig_s
 
 	/* ec_to_pub.c */
 		uint8_t *ec_to_pub(EC_KEY const *key, uint8_t pub[EC_PUB_LEN]);
+		void *ec_to_pub_errors(int error);
 
 	/* ec_from_pub.c */
 		EC_KEY *ec_from_pub(uint8_t const pub[EC_PUB_LEN]);
