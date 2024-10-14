@@ -2,9 +2,11 @@
 #define HBLK_CRYPTO_H
 
 
-#include <openssl/sha.h>
 #include <openssl/ec.h>
+#include <openssl/err.h>
 #include <openssl/obj_mac.h> /* Here is where NID_secp256k1 is defined */
+#include <openssl/sha.h>
+
 
 #include <errno.h>
 #include <stdint.h>
