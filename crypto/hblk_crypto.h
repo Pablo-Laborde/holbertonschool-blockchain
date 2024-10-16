@@ -5,12 +5,14 @@
 #include <openssl/ec.h>
 #include <openssl/err.h>
 #include <openssl/obj_mac.h> /* Here is where NID_secp256k1 is defined */
+#include <openssl/pem.h>
 #include <openssl/sha.h>
 
 
 #include <errno.h>
 #include <stdint.h>
 #include <string.h>
+#include <sys/stat.h>
 
 
 # define EC_CURVE   NID_secp256k1
@@ -58,6 +60,13 @@ typedef struct sig_s
 	/* ec_from_pub.c */
 		EC_KEY *ec_from_pub(uint8_t const pub[EC_PUB_LEN]);
 		void *ec_from_pub_errors(int error);
+
+	/* ec_save.c */
+		int ec_save(EC_KEY *key, char const *folder);
+		int ec_save_public(EC_KEY *key, char const *folder, int len);
+		int ec_save_private(EC_KEY *key, char const *folder, int len);
+		int create_dir(char const *folder);
+		int ec_save_errors(int error);
 
 
 #endif
