@@ -68,5 +68,10 @@ typedef struct sig_s
 		int create_dir(char const *folder);
 		int ec_save_errors(int error);
 
+	/* ec_load.c */
+		EC_KEY *ec_load(char const *folder);
+		EC_KEY *ec_load_private(char const *folder, int len, EC_KEY **key);
+		EC_KEY *ec_load_public(char const *folder, int len, EC_KEY **key);
+
 
 #endif
