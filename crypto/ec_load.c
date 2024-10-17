@@ -13,7 +13,7 @@ EC_KEY *ec_load(char const *folder)
 
 	if (!folder)
 		return (NULL);
-	key = ec_create();
+	key = EC_KEY_new_by_curve_name(EC_CURVE);
 	if (!key)
 		return (NULL);
 	while (folder[len])
