@@ -41,6 +41,7 @@ EC_KEY *ec_load_private(char const *folder, int len, EC_KEY **key)
 	if (!path)
 		return (NULL);
 	strcpy(path, folder);
+	strcat(path, "/");
 	strcat(path, "key.pem");
 	fd = fopen(path, "r");
 	if (!fd)
@@ -69,6 +70,7 @@ EC_KEY *ec_load_public(char const *folder, int len, EC_KEY **key)
 		return (NULL);
 	strcpy(path, folder);
 	strcat(path, "pub_key.pem");
+	strcat(path, "/");
 	fd = fopen(path, "r");
 	if (!fd)
 		return (NULL);
