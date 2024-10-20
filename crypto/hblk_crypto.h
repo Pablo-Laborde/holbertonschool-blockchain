@@ -3,6 +3,7 @@
 
 
 #include <openssl/ec.h>
+#include <openssl/ecdsa.h>
 #include <openssl/err.h>
 #include <openssl/obj_mac.h> /* Here is where NID_secp256k1 is defined */
 #include <openssl/pem.h>
@@ -72,6 +73,10 @@ typedef struct sig_s
 		EC_KEY *ec_load(char const *folder);
 		EC_KEY *ec_load_private(char const *folder, int len, EC_KEY **key);
 		EC_KEY *ec_load_public(char const *folder, int len, EC_KEY **key);
+
+	/* ec_sign.c */
+		uint8_t *ec_sign(EC_KEY const *key, uint8_t const *msg, size_t msglen,
+						sig_t *sig);
 
 
 #endif
