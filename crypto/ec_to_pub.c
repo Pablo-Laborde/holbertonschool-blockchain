@@ -13,7 +13,7 @@ uint8_t *ec_to_pub(EC_KEY const *key, uint8_t pub[EC_PUB_LEN])
 	const EC_POINT *p = NULL;
 	point_conversion_form_t f;
 
-	if (!key)
+	if (!key || !pub)
 		return (ec_to_pub_errors(1));
 	g = EC_KEY_get0_group(key);
 	if (!g)
