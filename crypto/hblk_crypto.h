@@ -48,15 +48,12 @@ typedef struct sig_s
 	/* sha256.c */
 		uint8_t *sha256(int8_t const *s, size_t len,
 						uint8_t digest[SHA256_DIGEST_LENGTH]);
-		void *sha256_errors(int error);
 
 	/* ec_create.c */
 		EC_KEY *ec_create(void);
-		void *ec_create_errors(int error);
 
 	/* ec_to_pub.c */
 		uint8_t *ec_to_pub(EC_KEY const *key, uint8_t pub[EC_PUB_LEN]);
-		void *ec_to_pub_errors(int error);
 
 	/* ec_from_pub.c */
 		EC_KEY *ec_from_pub(uint8_t const pub[EC_PUB_LEN]);
