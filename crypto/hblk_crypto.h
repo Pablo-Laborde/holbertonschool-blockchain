@@ -13,6 +13,7 @@
 #include <errno.h>
 #include <stdint.h>
 #include <string.h>
+#include <unistd.h>
 #include <sys/stat.h>
 
 
@@ -60,10 +61,8 @@ typedef struct sig_s
 
 	/* ec_save.c */
 		int ec_save(EC_KEY *key, char const *folder);
-		int ec_save_public(EC_KEY *key, char const *folder, int len);
-		int ec_save_private(EC_KEY *key, char const *folder, int len);
-		int create_dir(char const *folder);
-		int ec_save_errors(int error);
+		int ec_save_public(EC_KEY *key);
+		int ec_save_private(EC_KEY *key);
 
 	/* ec_load.c */
 		EC_KEY *ec_load(char const *folder);
