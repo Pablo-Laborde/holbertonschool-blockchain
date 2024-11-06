@@ -66,8 +66,6 @@ typedef struct sig_s
 
 	/* ec_load.c */
 		EC_KEY *ec_load(char const *folder);
-		EC_KEY *ec_load_private(char const *folder, int len, EC_KEY **key);
-		EC_KEY *ec_load_public(char const *folder, int len, EC_KEY **key);
 
 	/* ec_sign.c */
 		uint8_t *ec_sign(EC_KEY const *key, uint8_t const *msg, size_t msglen,

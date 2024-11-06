@@ -8,73 +8,21 @@
  */
 EC_KEY *ec_load(char const *folder)
 {
-	int len = 0;
+	FILE *fd = NULL;
 	EC_KEY *key = NULL;
 
-	if (!folder)
+	if (!folder || (chdir(folder) == -1))
 		return (NULL);
 	key = EC_KEY_new_by_curve_name(EC_CURVE);
 	if (!key)
 		return (NULL);
-	while (folder[len])
-		len++;
-	ec_load_private(folder, len, &key);
-	ec_load_public(folder, len, &key);
+	fd = fopen(PRI_FILENAME, "r");
+	if (!fd || !PEM_read_ECPrivateKey(fd, &key, NULL, NULL))
+		return (NULL);
+	fclose(fd);
+	fd = fopen(PUB_FILENAME, "r");
+	if (!fd || !PEM_read_EC_PUBKEY(fd, &key, NULL, NULL))
+		return (NULL);
+	fclose(fd);
 	return (key);
-}
-
-
-/**
- * ec_load_private- func
- * @folder: char const *
- * @len: int
- * @key: EC_KEY **
- * Return: EC_KEY *
- */
-EC_KEY *ec_load_private(char const *folder, int len, EC_KEY **key)
-{
-	FILE *fd = NULL;
-	char *path = NULL;
-	EC_KEY *k = NULL;
-
-	path = malloc(sizeof(char) * (len + 13));
-	if (!path)
-		return (NULL);
-	strcpy(path, folder);
-	strcat(path, "/");
-	strcat(path, "key.pem");
-	fd = fopen(path, "r");
-	if (!fd)
-		return (NULL);
-	k = PEM_read_ECPrivateKey(fd, key, NULL, NULL);
-	free(path);
-	return (k);
-}
-
-
-/**
- * ec_load_public- func
- * @folder: char const *
- * @len: int
- * @key: EC_KEY **
- * Return: EC_KEY *
- */
-EC_KEY *ec_load_public(char const *folder, int len, EC_KEY **key)
-{
-	FILE *fd = NULL;
-	char *path = NULL;
-	EC_KEY *k = NULL;
-
-	path = malloc(sizeof(char) * (len + 13));
-	if (!path)
-		return (NULL);
-	strcpy(path, folder);
-	strcat(path, "pub_key.pem");
-	strcat(path, "/");
-	fd = fopen(path, "r");
-	if (!fd)
-		return (NULL);
-	k = PEM_read_EC_PUBKEY(fd, key, NULL, NULL);
-	free(path);
-	return (k);
 }
