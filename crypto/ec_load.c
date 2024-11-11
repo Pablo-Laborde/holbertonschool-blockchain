@@ -17,13 +17,9 @@ EC_KEY *ec_load(char const *folder)
 	if (!key)
 		return (NULL);
 	fd = fopen(PRI_FILENAME, "r");
-	if (!fd)
-		return (NULL);
 	PEM_read_ECPrivateKey(fd, &key, NULL, NULL);
 	fclose(fd);
 	fd = fopen(PUB_FILENAME, "r");
-	if (!fd)
-		return (NULL);
 	PEM_read_EC_PUBKEY(fd, &key, NULL, NULL);
 	fclose(fd);
 	return (key);
