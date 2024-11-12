@@ -16,11 +16,19 @@ EC_KEY *ec_load(char const *folder)
 	key = EC_KEY_new_by_curve_name(EC_CURVE);
 	if (!key)
 		return (NULL);
-	fd = fopen(PRI_FILENAME, "r");
-	PEM_read_ECPrivateKey(fd, &key, NULL, NULL);
-	fclose(fd);
 	fd = fopen(PUB_FILENAME, "r");
-	PEM_read_EC_PUBKEY(fd, &key, NULL, NULL);
+	if (!fd || !PEM_read_EC_PUBKEY(fd, &key, NULL, NULL))
+	{
+		EC_KEY_free(key);
+		return (NULL);
+	}
+	fclose(fd);
+	fd = fopen(PRI_FILENAME, "r");
+	if (!fd || !PEM_read_ECPrivateKey(fd, &key, NULL, NULL))
+	{
+		EC_KEY_free(key);
+		return (NULL);
+	}
 	fclose(fd);
 	return (key);
 }
