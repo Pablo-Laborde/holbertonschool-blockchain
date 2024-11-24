@@ -7,21 +7,25 @@
 
 /* Libraries */
 	#include <stdint.h>
+	#include <stdio.h>
+	#include <stdlib.h>
+	#include <string.h>
+	#include <time.h>
+
+	#include <llist.h>
+	#include "../../crypto/hblk_crypto.h"
+
 
 
 /**
- * struct block_s - Block structure
+ * struct blockchain_s - Blockchain structure
  *
- * @info: Block info
- * @data: Block data
- * @hash: 256-bit digest of the Block, to ensure authenticity
+ * @chain: Linked list of pointers to block_t
  */
-typedef struct block_s
+typedef struct blockchain_s
 {
-	block_info_t    info; /* This must stay first */
-	block_data_t    data; /* This must stay second */
-	uint8_t     hash[SHA256_DIGEST_LENGTH];
-} block_t;
+	llist_t     *chain;
+} blockchain_t;
 
 
 /**
@@ -67,8 +71,24 @@ typedef struct block_data_s
 } block_data_t;
 
 
+/**
+ * struct block_s - Block structure
+ *
+ * @info: Block info
+ * @data: Block data
+ * @hash: 256-bit digest of the Block, to ensure authenticity
+ */
+typedef struct block_s
+{
+	block_info_t    info; /* This must stay first */
+	block_data_t    data; /* This must stay second */
+	uint8_t     hash[SHA256_DIGEST_LENGTH];
+} block_t;
+
+
 
 /* Functions */
+	blockchain_t *blockchain_create(void);
 
 
 #endif
