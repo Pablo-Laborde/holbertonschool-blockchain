@@ -6,13 +6,16 @@
 
 
 /* Libraries */
+	#include <fcntl.h>
 	#include <stdint.h>
 	#include <stdio.h>
 	#include <stdlib.h>
 	#include <string.h>
 	#include <time.h>
+	#include <unistd.h>
 
 	#include <llist.h>
+	#include "provided/endianness.h"
 	#include "../../crypto/hblk_crypto.h"
 
 
@@ -95,6 +98,8 @@ typedef struct block_s
 	void blockchain_destroy(blockchain_t *blockchain);
 	uint8_t *block_hash(block_t const *block,
 		uint8_t hash_buf[SHA256_DIGEST_LENGTH]);
+	int blockchain_serialize(blockchain_t const *blockchain, char const *path);
+	int save_block(block_t *block, uint32_t index, FILE *fd);
 
 
 #endif
