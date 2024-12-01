@@ -100,6 +100,8 @@ typedef struct block_s
 		uint8_t hash_buf[SHA256_DIGEST_LENGTH]);
 	int blockchain_serialize(blockchain_t const *blockchain, char const *path);
 	int save_block(block_t *block, uint32_t index, FILE *fd);
+	blockchain_t *blockchain_deserialize(char const *path);
+	block_t *rebuild_block(FILE *fd);
 
 
 #endif
