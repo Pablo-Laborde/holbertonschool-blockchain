@@ -18,6 +18,8 @@ int block_is_valid(block_t const *block, block_t const *prev_block)
 		return (EXIT_FAILURE);
 	if (block->info.index && check_block(block, prev_block))
 		return (EXIT_FAILURE);
+	if (!hash_matches_difficulty(block->hash, block->info.difficulty))
+		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
 
@@ -46,6 +48,8 @@ int compare_to_genesis(block_t const *block)
 		"\xc5\x2c\x26\xc8\xb5\x46\x16\x39\x63\x5d\x8e\xdf\x2a\x97\xd4\x8d"
 		"\x0c\x8e\x00\x09\xc8\x17\xf2\xb1\xd3\xd7\xff\x2f\x04\x51\x58\x03",
 		SHA256_DIGEST_LENGTH))
+		return (EXIT_FAILURE);
+	if (!hash_matches_difficulty(block->hash, block->info.difficulty))
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
