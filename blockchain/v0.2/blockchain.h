@@ -112,6 +112,7 @@ typedef struct block_s
 	int hash_matches_difficulty(uint8_t const hash[SHA256_DIGEST_LENGTH],
 		uint32_t difficulty);
 	int get_leading_zeroes(uint8_t const hash[SHA256_DIGEST_LENGTH]);
+	void block_mine(block_t *block);
 
 
 #endif
