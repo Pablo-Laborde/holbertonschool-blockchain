@@ -13,7 +13,7 @@ int hash_matches_difficulty(uint8_t const hash[SHA256_DIGEST_LENGTH],
 	uint32_t leading_zeroes	= 0;
 
 	leading_zeroes = get_leading_zeroes(hash);
-	return ((leading_zeroes == difficulty) ? 1 : 0);
+	return ((difficulty <= leading_zeroes) ? 1 : 0);
 }
 
 
