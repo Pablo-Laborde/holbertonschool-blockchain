@@ -4,6 +4,10 @@
 
 #define BLOCKCHAIN_DATA_MAX 1024
 
+/* Difficulty to mine */
+#define BLOCK_GENERATION_INTERVAL 1
+#define DIFFICULTY_ADJUSTMENT_INTERVAL 5
+
 
 /* Libraries */
 	#include <fcntl.h>
@@ -113,6 +117,7 @@ typedef struct block_s
 		uint32_t difficulty);
 	int get_leading_zeroes(uint8_t const hash[SHA256_DIGEST_LENGTH]);
 	void block_mine(block_t *block);
+	uint32_t blockchain_difficulty(blockchain_t const *blockchain);
 
 
 #endif
