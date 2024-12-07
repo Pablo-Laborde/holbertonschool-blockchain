@@ -8,7 +8,7 @@
  */
 uint32_t blockchain_difficulty(blockchain_t const *blockchain)
 {
-	int mod = 0, idx = 0, elapsed_time = 0;
+	int mod = 0, idx = 0, elapsed_time = 0, eet = 0;
 	block_t *last = NULL, *prev = NULL;
 
 	if (!blockchain || !blockchain->chain)
@@ -19,10 +19,11 @@ uint32_t blockchain_difficulty(blockchain_t const *blockchain)
 		return (last->info.difficulty);
 	idx = llist_size(blockchain->chain) - DIFFICULTY_ADJUSTMENT_INTERVAL;
 	prev = llist_get_node_at(blockchain->chain, idx);
+	eet = BLOCK_GENERATION_INTERVAL * DIFFICULTY_ADJUSTMENT_INTERVAL;
 	elapsed_time = last->info.timestamp - prev->info.timestamp;
-	if (elapsed_time < (BLOCK_GENERATION_INTERVAL / 2))
+	if (elapsed_time < (eet / 2))
 		last->info.difficulty++;
-	if (elapsed_time > (BLOCK_GENERATION_INTERVAL * 2))
+	if (elapsed_time > (eet * 2))
 		last->info.difficulty--;
 	return (last->info.difficulty);
 }
