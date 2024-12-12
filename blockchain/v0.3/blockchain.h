@@ -109,22 +109,6 @@ typedef struct tx_in_s
 
 
 /**
- * struct transaction_s - Transaction structure
- *
- * @id:      Transaction ID. A hash of all the inputs and outputs.
- *           Prevents further alteration of the transaction.
- * @inputs:  List of `tx_in_t *`. Transaction inputs
- * @outputs: List of `tx_out_t *`. Transaction outputs
- */
-typedef struct transaction_s
-{
-	uint8_t     id[SHA256_DIGEST_LENGTH];
-	llist_t     *inputs;
-	llist_t     *outputs;
-} transaction_t;
-
-
-/**
  * struct unspent_tx_out_s - Unspent transaction output
  *
  * Description: This structure helps identify transaction outputs that were not
@@ -140,6 +124,23 @@ typedef struct unspent_tx_out_s
 	uint8_t     tx_id[SHA256_DIGEST_LENGTH];
 	tx_out_t    out;
 } unspent_tx_out_t;
+
+
+/**
+ * struct transaction_s - Transaction structure
+ *
+ * @id:      Transaction ID. A hash of all the inputs and outputs.
+ *           Prevents further alteration of the transaction.
+ * @inputs:  List of `tx_in_t *`. Transaction inputs
+ * @outputs: List of `tx_out_t *`. Transaction outputs
+ */
+typedef struct transaction_s
+{
+	uint8_t     id[SHA256_DIGEST_LENGTH];
+	llist_t     *inputs;
+	llist_t     *outputs;
+} transaction_t;
+
 
 
 /**
@@ -203,6 +204,7 @@ typedef struct blockchain_s
 	unspent_tx_out_t *unspent_tx_out_create(
 		uint8_t block_hash[SHA256_DIGEST_LENGTH],
 		uint8_t tx_id[SHA256_DIGEST_LENGTH], tx_out_t const *out);
+	tx_in_t *tx_in_create(unspent_tx_out_t const *unspent);
 
 
 #endif
