@@ -21,7 +21,6 @@ uint8_t *transaction_hash(transaction_t const *transaction,
 	j = 32 * 3 * size;
 	out_size = llist_size(transaction->outputs);
 	size = j +  32 * out_size;
-	printf("%d\n", size);
 	buffer = malloc(size);
 	if (!buffer)
 		return (NULL);
