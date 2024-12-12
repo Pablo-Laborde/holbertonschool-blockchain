@@ -196,6 +196,7 @@ typedef struct blockchain_s
 	uint32_t blockchain_difficulty(blockchain_t const *blockchain);
 
 /* v0.3 */
+	tx_out_t *tx_out_create(uint32_t amount, uint8_t const pub[EC_PUB_LEN]);
 
 
 #endif
