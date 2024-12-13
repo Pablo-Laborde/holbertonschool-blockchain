@@ -208,7 +208,7 @@ typedef struct blockchain_s
 	uint8_t *transaction_hash(transaction_t const *transaction,
 		uint8_t hash_buf[SHA256_DIGEST_LENGTH]);
 	int cpy_in(tx_in_t *node, int idx, uint8_t *buffer);
-	int cpy_out(tx_in_t *node, int idx, uint8_t *buffer);
+	int cpy_out(tx_out_t *node, int idx, uint8_t *buffer);
 
 
 #endif
