@@ -18,7 +18,7 @@ uint8_t *transaction_hash(transaction_t const *transaction,
 	if (!transaction || !hash_buf)
 		return (NULL);
 	in_size = llist_size(transaction->inputs);
-	j = 32 * 3 * size;
+	j = 32 * 3 * in_size;
 	out_size = llist_size(transaction->outputs);
 	size = j +  32 * out_size;
 	buffer = malloc(size);
