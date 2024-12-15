@@ -209,6 +209,10 @@ typedef struct blockchain_s
 		uint8_t hash_buf[SHA256_DIGEST_LENGTH]);
 	int cpy_in(tx_in_t *node, int idx, uint8_t *buffer);
 	int cpy_out(tx_out_t *node, int idx, uint8_t *buffer);
+	sig_t *tx_in_sign(tx_in_t *in, uint8_t const tx_id[SHA256_DIGEST_LENGTH],
+		EC_KEY const *sender, llist_t *all_unspent);
+	int find_block(unspent_tx_out_t *node, tx_in_t *in);
+	int check_pub(EC_KEY const *key, uint8_t *pub);
 
 
 #endif
