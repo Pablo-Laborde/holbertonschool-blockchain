@@ -60,3 +60,20 @@ int check_pub(EC_KEY const *key, uint8_t *pub)
 		oct_pub, EC_PUB_LEN, NULL);
 	return (memcmp(pub, oct_pub, len));
 }
+
+
+/**
+ * sign_inputs-		signs all the inputs
+ * @in:				list of inputs to be signed
+ * @idx:			index of the node in the list, it's not used
+ * @aux:			auxiliar structure that contains all the parameters
+ *					needed to sign
+ * Return:			an integer
+ */
+int sign_inputs(tx_in_t *in, int idx, isg_t *aux)
+{
+	(void)idx;
+	tx_in_sign(in, aux->tx_id, aux->key, aux->all_unspent);
+	return (0);
+}
+
