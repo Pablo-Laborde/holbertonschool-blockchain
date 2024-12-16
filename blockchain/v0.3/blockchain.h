@@ -28,6 +28,36 @@
 
 
 /**
+ * struct inputs_search_s - Structure to ease the inputs search
+ *
+ * @inputs:		list of inputs
+ * @pub:		public key
+ * @sum:		sum of coins available
+ */
+typedef struct inputs_search_s
+{
+	llist_t		*inputs;
+	uint8_t		*pub;
+	uint32_t	*sum;
+} is_t;
+
+
+/**
+ * struct in_signer_s - Structure to ease the inputs signature
+ *
+ * @tx_id: 		pointer to the transaction id
+ * @key: 		pointer to key used to sign
+ * @all_unspent:	llist of unspent transactions output
+ */
+typedef struct in_signer_s
+{
+	uint8_t		*tx_id;
+	EC_KEY		*key;
+	llist_t		*all_unspent;
+} isg_t;
+
+
+/**
  * struct block_info_s - Block info structure
  *
  * @index:      Index of the Block in the Blockchain
@@ -213,6 +243,13 @@ typedef struct blockchain_s
 		EC_KEY const *sender, llist_t *all_unspent);
 	int find_block(unspent_tx_out_t *node, tx_in_t *in);
 	int check_pub(EC_KEY const *key, uint8_t *pub);
+	transaction_t *transaction_create(EC_KEY const *sender,
+		EC_KEY const *receiver, uint32_t amount, llist_t *all_unspent);
+	int search_inputs(unspent_tx_out_t *uto, int idx, is_t *node);
+	void get_pub_key(EC_KEY const *key, uint8_t *pub);
+	int check_owner(unspent_tx_out_t *node, uint8_t pub[EC_PUB_LEN]);
+	void *transaction_failure(transaction_t *transaction);
+	int sign_inputs(tx_in_t *in, int idx, isg_t *aux);
 
 
 #endif
