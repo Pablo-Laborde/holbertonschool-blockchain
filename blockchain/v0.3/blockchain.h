@@ -28,6 +28,24 @@
 
 
 /**
+ * struct tx_valid_s - Structure to ease transaction validation
+ *
+ * @all_unspent:	llist of unspent transactions output
+ * @flag:			flag to check if signature is correct
+ * @sum:			sum of all amounts related to the inputs
+ * @tx_id:			transaction id
+ */
+ typedef struct tx_valid_s
+ {
+	llist_t		*all_unspent;
+	uint8_t		*flag;
+	uint8_t		*sum;
+	uint8_t		*tx_id;
+	
+ } tv_t;
+
+
+/**
  * struct inputs_search_s - Structure to ease the inputs search
  *
  * @inputs:		list of inputs
@@ -250,6 +268,10 @@ typedef struct blockchain_s
 	int check_owner(unspent_tx_out_t *node, uint8_t pub[EC_PUB_LEN]);
 	void *transaction_failure(transaction_t *transaction);
 	int sign_inputs(tx_in_t *in, int idx, isg_t *aux);
+	int transaction_is_valid(transaction_t const *transaction,
+		llist_t *all_unspent);
+	int tx_validator(tx_in_t *in, int idx, tv_t *aux);
+	int output_coins_counter(tx_out_t *out, int idx, uint8_t *sumout);
 
 
 #endif
