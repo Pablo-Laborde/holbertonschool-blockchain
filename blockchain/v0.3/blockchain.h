@@ -272,6 +272,9 @@ typedef struct blockchain_s
 		llist_t *all_unspent);
 	int tx_validator(tx_in_t *in, int idx, tv_t *aux);
 	int output_coins_counter(tx_out_t *out, int idx, uint8_t *sumout);
+	transaction_t *coinbase_create(EC_KEY const *receiver,
+		uint32_t block_index);
+	void *cbc_failure(transaction_t *transaction);
 
 
 #endif
