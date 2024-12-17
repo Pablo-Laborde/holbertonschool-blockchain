@@ -43,6 +43,7 @@ transaction_t *coinbase_create(EC_KEY const *receiver, uint32_t block_index)
 	ec_to_pub(receiver, pub);
 	llist_add_node(transaction->outputs,
 		(llist_node_t)tx_out_create(COINBASE_AMOUNT, pub), ADD_NODE_REAR);
+	transaction_hash(transaction, transaction->id);
 	return (transaction);
 }
 
