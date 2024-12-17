@@ -5,7 +5,7 @@
  * coinbase_is_valid -		checks whether a coinbase transaction is valid
  * @coinbase:				points to the coinbase transaction to verify
  * @block_index:			is the index of the Block the coinbase transaction
- * 							will belong to
+ *							will belong to
  * Return:					1 if the coinbase transaction is valid,
  *							and 0 otherwise
  *
@@ -14,7 +14,7 @@
  *
  *		The computed hash of the transaction must match the hash stored in it
  *
- * 		The transaction must contain exactly 1 input
+ *		The transaction must contain exactly 1 input
  *
  *		The transaction must contain exactly 1 output
  *
