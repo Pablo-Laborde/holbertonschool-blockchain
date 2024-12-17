@@ -8,5 +8,6 @@
  */
 void block_destroy(block_t *block)
 {
+	transaction_destroy(block->transaction);
 	free(block);
 }
