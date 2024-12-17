@@ -277,6 +277,7 @@ typedef struct blockchain_s
 	void *cbc_failure(transaction_t *transaction);
 	int coinbase_is_valid(transaction_t const *coinbase, uint32_t block_index);
 	void transaction_destroy(transaction_t *transaction);
+	int cpy_tx(transaction_t *tx, int idx, uint8_t *buf);
 
 
 #endif
