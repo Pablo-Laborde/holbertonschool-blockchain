@@ -40,7 +40,7 @@
 	llist_t		*all_unspent;
 	uint8_t		*flag;
 	uint8_t		*sum;
-	uint8_t		*tx_id;
+	uint8_t		const *tx_id;
 	
  } tv_t;
 
