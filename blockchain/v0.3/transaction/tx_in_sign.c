@@ -32,6 +32,8 @@ sig_t *tx_in_sign(tx_in_t *in, uint8_t const tx_id[SHA256_DIGEST_LENGTH],
  */
 int find_block(unspent_tx_out_t *node, tx_in_t *in)
 {
+	if (!node || !in)
+		return (0);
 	if (memcmp(node->block_hash, in->block_hash, SHA256_DIGEST_LENGTH))
 		return (0);
 	if (memcmp(node->tx_id, in->tx_id, SHA256_DIGEST_LENGTH))
