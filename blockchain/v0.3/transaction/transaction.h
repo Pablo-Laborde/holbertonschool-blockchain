@@ -17,8 +17,7 @@
 	#include <unistd.h>
 
 	#include <llist.h>
-	#include "provided/endianness.h"
-	#include "../../crypto/hblk_crypto.h"
+	#include "../../../crypto/hblk_crypto.h"
 
 
 
