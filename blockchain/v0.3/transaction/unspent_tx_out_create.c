@@ -1,12 +1,21 @@
-#include "../blockchain.h"
+#include "transaction.h"
 
 
 /**
- * unspent_tx_out_create- func
- * @block_hash: uint8_t *
- * @tx_id: uint8_t *
- * @out: tx_out_t const *
- * Return: unspent_tx_out_t *
+ * unspent_tx_out_create -	allocates and initializes an unspent transaction
+ *							output structure
+ *
+ * @block_hash:				contains the hash of the Block where the referenced
+ *							transaction output is located
+ *
+ * @tx_id:					contains the hash of a transaction in the Block
+ *							block_hash, where the referenced transaction output
+ *							is located
+ *
+ * @out:					points to the referenced transaction output
+ *
+ * Return:					pointer to the created unspent transaction output
+ *							upon success, or NULL upon failure
  */
 unspent_tx_out_t *unspent_tx_out_create(
 	uint8_t block_hash[SHA256_DIGEST_LENGTH],

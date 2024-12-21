@@ -1,11 +1,27 @@
-#include "../blockchain.h"
+#include "transaction.h"
 
 
 /**
- * transaction_hash- func
- * @transaction: transaction_t const *
- * @hash_buf: uint8_t *
- * Return: uint8_t *
+ * transaction_hash -	computes the ID (hash) of a transaction
+ *
+ * @transaction:		points to the transaction to compute the hash of
+ *
+ * @hash_buf:			is a buffer in which to store the computed hash
+ *
+ * Return:				pointer to hash_buf
+ *
+ *
+ * transaction->id must be left unchanged
+ *
+ * The transaction ID must be a hash of a buffer containing the following
+ * information:
+ *		Each input’s block_hash (32 bytes), tx_id (32 bytes) and tx_out_hash
+ * 		(32 bytes), followed by
+ *
+ *		Each output’s hash (32 bytes)
+ *
+ *		For example, the buffer for a transaction with 4 inputs and 2 outputs
+ *		would be 448 bytes long (32 * 3 * 4 + 32 * 2)
  */
 uint8_t *transaction_hash(transaction_t const *transaction,
 	uint8_t hash_buf[SHA256_DIGEST_LENGTH])
@@ -31,11 +47,15 @@ uint8_t *transaction_hash(transaction_t const *transaction,
 
 
 /**
- * cpy_in- func
- * @node: tx_in_t *
- * @idx: int
- * @buffer: uint8_t *
- * Return: int
+ * cpy_in -		copies tx_in_t into buffer
+ *
+ * @node:		node in the list
+ *
+ * @idx:		index of the node, not used
+ *
+ * @buffer:		buffer to copy data in
+ *
+ * Return:		an integer
  */
 int cpy_in(tx_in_t *node, int idx, uint8_t *buffer)
 {
@@ -47,11 +67,15 @@ int cpy_in(tx_in_t *node, int idx, uint8_t *buffer)
 
 
 /**
- * cpy_out- func
- * @node: tx_out_t *
- * @idx: int
- * @buffer: uint8_t *
- * Return: int
+ * cpy_out -	copies tx_out_t into buffer
+ *
+ * @node:		node in the list
+ *
+ * @idx:		index of the node, not used
+ *
+ * @buffer:		buffer to copy data in
+ *
+ * Return:		an integer
  */
 int cpy_out(tx_out_t *node, int idx, uint8_t *buffer)
 {

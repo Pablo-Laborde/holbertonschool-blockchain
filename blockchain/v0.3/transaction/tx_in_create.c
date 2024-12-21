@@ -1,10 +1,16 @@
-#include "../blockchain.h"
+#include "transaction.h"
 
 
 /**
- * tx_in_create- func
- * @unspent: unspent_tx_out_t const *
- * Return: tx_in_t *
+ * tx_in_create -	allocates and initializes a transaction input structure
+ *
+ * @unspent:		points to the unspent transaction output to be converted
+ * 					to a transaction input
+ *
+ * Return:			pointer to the created transaction input upon success,
+ *					or NULL upon failure
+ *
+ * The created transaction input’s signature structure must be zeroed
  */
 tx_in_t *tx_in_create(unspent_tx_out_t const *unspent)
 {

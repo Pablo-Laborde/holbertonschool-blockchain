@@ -3,7 +3,9 @@
 
 /**
  * transaction_destroy -	deallocates a transaction structure
+ *
  * @transaction:			points to the transaction to delete
+ *
  * Return:					void
  */
 void transaction_destroy(transaction_t *transaction)

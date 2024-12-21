@@ -1,12 +1,15 @@
-#include "../blockchain.h"
+#include "transaction.h"
 
 
 /**
  * coinbase_create -	creates a coinbase transaction
+ *
  * @receiver:			contains the public key of the miner, who will receive
  *						the coinbase coins
+ *
  * @block_index:		is the index of the Block the coinbase transaction
  *						will belong to
+ *
  * Return:				pointer to the created transaction upon success,
  *						or NULL upon failure
  *
@@ -50,7 +53,9 @@ transaction_t *coinbase_create(EC_KEY const *receiver, uint32_t block_index)
 
 /**
  * cbc_failure -	exit function in case of failure
+ *
  * @transaction:	transaction to be freed
+ *
  * Return:			void pointer
  */
 void *cbc_failure(transaction_t *transaction)

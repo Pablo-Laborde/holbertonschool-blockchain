@@ -1,11 +1,15 @@
-#include "../blockchain.h"
+#include "transaction.h"
 
 
 /**
- * tx_out_create- func
- * @amount: uint32_t
- * @pub: uint8_t *
- * Return: tx_out_t *
+ * tx_out_create -	allocates and initializes a transaction output structure
+ *
+ * @amount:			is the amount of the transaction
+ *
+ * @pub:			is the public key of the transaction receiver
+ *
+ * Return:			pointer to the created transaction output upon success,
+ *					or NULL upon failure
  */
 tx_out_t *tx_out_create(uint32_t amount, uint8_t const pub[EC_PUB_LEN])
 {

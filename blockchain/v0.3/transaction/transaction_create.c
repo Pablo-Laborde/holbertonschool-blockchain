@@ -1,12 +1,17 @@
-#include "../blockchain.h"
+#include "transaction.h"
 
 
 /**
- * transaction_create- func
+ * transaction_create -		creates a transaction
+ *
  * @sender:			contains the private key of the transaction sender
+ *
  * @receiver:		contains the public key of the transaction receiver
+ *
  * @amount:			is the amount to send
+ *
  * @all_unspent:	is the list of all the unspent outputs to date
+ *
  * Return:			return a pointer to the created transaction upon success,
  *					or NULL upon failure
  *
@@ -72,11 +77,15 @@ transaction_t *transaction_create(EC_KEY const *sender, EC_KEY const *receiver,
 
 
 /**
- * search_inputs- func
- * @uto: unspent_tx_out_t *
- * @idx: int
- * @node: ist *
- * Return: int
+ * search_inputs -	searchs for the matching unspent transaction
+ *
+ * @uto:			unspent node to check
+ *
+ * @idx:			index of the node, not used
+ *
+ * @node:			auxiliar structure
+ *
+ * Return:			an integer
  */
 int search_inputs(unspent_tx_out_t *uto, int idx, is_t *node)
 {
@@ -92,10 +101,13 @@ int search_inputs(unspent_tx_out_t *uto, int idx, is_t *node)
 
 
 /**
- * get_pub_key- func
- * @key: EC_KEY const *
- * @pub: uint8_t *
- * Return: void
+ * get_pub_key -	gets public key from key
+ *
+ * @key:			key that contains the public key
+ *
+ * @pub:			buffer to store the public key
+ *
+ * Return:			void
  */
 void get_pub_key(EC_KEY const *key, uint8_t *pub)
 {
@@ -110,10 +122,13 @@ void get_pub_key(EC_KEY const *key, uint8_t *pub)
 
 
 /**
- * check_owner- func
- * @node: unspent_tx_out_t *
- * @pub: uint8_t *
- * Return: int
+ * check_owner -	check if public keys match
+ *
+ * @node:			unspent node to check
+ *
+ * @pub:			buffer with the public key
+ *
+ * Return:			an integer
  */
 int check_owner(unspent_tx_out_t *node, uint8_t pub[EC_PUB_LEN])
 {
@@ -122,9 +137,11 @@ int check_owner(unspent_tx_out_t *node, uint8_t pub[EC_PUB_LEN])
 
 
 /**
- * transaction_failure- func
- * @transaction: transaction_t *
- * Return: void *
+ * transaction_failure - 	manages failure
+ *
+ * @transaction:			transaction node to free
+ *
+ * Return:					NULL
  */
 void *transaction_failure(transaction_t *transaction)
 {

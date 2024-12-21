@@ -3,9 +3,12 @@
 
 /**
  * transaction_is_valid -	checks whether a transaction is valid
+ *
  * @transaction:			points to the transaction to verify
+ *
  * @all_unspent:			is the list of all unspent transaction outputs to
  *							date
+ *
  * Return:					1 if the transaction is valid, and 0 otherwise
  *
  * The computed hash of the transaction must match the hash stored in it
@@ -44,9 +47,13 @@ int transaction_is_valid(transaction_t const *transaction,
 
 /**
  * tx_validator -	validates an input node
+ *
  * @in:				node to check if is valid
+ *
  * @idx:			node's index, it's not used
+ *
  * @aux:			auxiliar strucutre with data to validate node
+ *
  * Return:			an integer
  */
 int tx_validator(tx_in_t *in, int idx, tv_t *aux)
@@ -68,9 +75,13 @@ int tx_validator(tx_in_t *in, int idx, tv_t *aux)
 
 /**
  * output_coins_counter -	counts the amount of coins in the outputs list
+ *
  * @out:					node to chekc for the amount
+ *
  * @idx:					index of the node, not used
+ *
  * @sumout:					pointer to the counter
+ *
  * Return:					an integer
  */
 int output_coins_counter(tx_out_t *out, int idx, uint8_t *sumout)

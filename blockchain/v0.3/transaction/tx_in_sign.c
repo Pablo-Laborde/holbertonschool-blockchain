@@ -1,13 +1,30 @@
-#include "../blockchain.h"
+#include "transaction.h"
 
 
 /**
- * tx_in_sign- func
- * @in: tx_in_t *
- * @tx_id: uint8_t const *
- * @sender: EC_KEY const *
- * @all_unspent: llist_t *
- * Return: sig_t *
+ * tx_in_sign -		signs a transaction input, given the transaction id it is
+ *					from
+ *
+ * @in:				points to the transaction input structure to sign
+ *
+ * @tx_id:			contains the ID (hash) of the transaction the transaction
+ *					input to sign is stored in
+ *
+ * @sender:			contains the private key of the receiver of the coins
+ *					contained in the transaction output referenced by the
+ *					transaction input
+ *
+ * @all_unspent:	is the list of all unspent transaction outputs to date
+
+ * Your function must verify the public key derived from the private key in
+ * sender matches the public key stored in the transaction output referenced
+ * by the transaction input to be signed
+ *
+ * Your function must sign the ID of the transaction tx_id the transaction
+ * input is stored in, using sender‘s private key
+ *
+ * Your function must return a pointer to the resulting signature structure
+ * upon success, or NULL upon failure
  */
 sig_t *tx_in_sign(tx_in_t *in, uint8_t const tx_id[SHA256_DIGEST_LENGTH],
 	EC_KEY const *sender, llist_t *all_unspent)
@@ -25,10 +42,13 @@ sig_t *tx_in_sign(tx_in_t *in, uint8_t const tx_id[SHA256_DIGEST_LENGTH],
 
 
 /**
- * find_block- func
- * @node: unspent_tx_out_t *
- * @in: tx_in_t *
- * Return: int
+ * find_block -		compares the node data to the in data
+ *
+ * @node:			node to check the data
+ *
+ * @in:				data to look for
+ *
+ * Return:			an integer
  */
 int find_block(unspent_tx_out_t *node, tx_in_t *in)
 {
@@ -45,10 +65,13 @@ int find_block(unspent_tx_out_t *node, tx_in_t *in)
 
 
 /**
- * check_pub- func
- * @key: EC_KEY const *
- * @pub: uint8_t *
- * Return: int
+ * check_pub -		checks if the public key is correct
+ *
+ * @key:			key that contains the correct public key
+ *
+ * @pub:			public key to check
+ *
+ * Return:			an integer
  */
 int check_pub(EC_KEY const *key, uint8_t *pub)
 {
@@ -66,10 +89,14 @@ int check_pub(EC_KEY const *key, uint8_t *pub)
 
 /**
  * sign_inputs-		signs all the inputs
+ *
  * @in:				list of inputs to be signed
+ *
  * @idx:			index of the node in the list, it's not used
+ *
  * @aux:			auxiliar structure that contains all the parameters
  *					needed to sign
+ *
  * Return:			an integer
  */
 int sign_inputs(tx_in_t *in, int idx, isg_t *aux)
