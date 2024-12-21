@@ -64,7 +64,10 @@ int tx_validator(tx_in_t *in, int idx, tv_t *aux)
 	(void)idx;
 	uto = llist_find_node(aux->all_unspent, (node_ident_t)find_block, in);
 	if (!uto)
+	{
 		*(aux->flag) = 0;
+		return (0);
+	}
 	*(aux->sum) += uto->out.amount;
 	key = ec_from_pub(uto->out.pub);
 	if (!ec_verify(key, aux->tx_id, SHA256_DIGEST_LENGTH, &in->sig))
