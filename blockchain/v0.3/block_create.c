@@ -41,7 +41,10 @@ block_t *block_create(block_t const *prev, int8_t const *data,
 	nb->info.difficulty = 0;
 	nb->info.timestamp = time(NULL);
 	nb->info.nonce = 0;
-	memcpy(nb->info.prev_hash, prev->hash, SHA256_DIGEST_LENGTH);
+	if (!prev)
+		memset(nb->info.prev_hash, 0, SHA256_DIGEST_LENGTH);
+	else
+		memcpy(nb->info.prev_hash, prev->hash, SHA256_DIGEST_LENGTH);
 	dl = (data_len > BLOCKCHAIN_DATA_MAX) ? BLOCKCHAIN_DATA_MAX : data_len;
 	memcpy(nb->data.buffer, data, dl);
 	nb->data.len = dl;
