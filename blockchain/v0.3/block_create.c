@@ -10,7 +10,7 @@
  *
  * @data_len:		stores the number of bytes to duplicate in data.
  *					If data_len is bigger than BLOCKCHAIN_DATA_MAX,
- * 					then only BLOCKCHAIN_DATA_MAX bytes must be duplicated.
+ *					then only BLOCKCHAIN_DATA_MAX bytes must be duplicated.
  *
  * Return:			pointer to the allocated Block
  *
