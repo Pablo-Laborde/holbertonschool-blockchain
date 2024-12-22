@@ -10,22 +10,20 @@ blockchain_t *blockchain_create(void)
 	blockchain_t *blockchain = NULL;
 	block_t *block = NULL;
 
-	blockchain = malloc(sizeof(blockchain));
+	blockchain = malloc(sizeof(blockchain_t));
 	if (!blockchain)
 		return (NULL);
 	blockchain->chain = llist_create(0);
 	blockchain->unspent = llist_create(MT_SUPPORT_FALSE);
 	if (!blockchain->chain || !blockchain->unspent)
 	{
-		free(blockchain);
+		blockchain_destroy(blockchain);
 		return (NULL);
 	}
 	block = malloc(sizeof(block_t));
 	if (!block)
 	{
-		llist_destroy(blockchain->chain, 0, NULL);
-		llist_destroy(blockchain->unspent, 0, NULL);
-		free(blockchain);
+		blockchain_destroy(blockchain);
 		return (NULL);
 	}
 	block->info.index = 0;
