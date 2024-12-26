@@ -102,6 +102,11 @@ typedef struct blockchain_s
 
 
 
+/* Variables */
+	extern const block_t _genesis;
+
+
+
 /* Functions prototypes */
 
 /* v0.1 */
