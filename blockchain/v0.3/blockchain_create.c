@@ -27,6 +27,7 @@ blockchain_t *blockchain_create(void)
 		blockchain_destroy(blockchain);
 		return (NULL);
 	}
+	memset(block, 0, sizeof(block_t));
 	memcpy(block, &_genesis, sizeof(block_t));
 	llist_add_node(blockchain->chain, block, ADD_NODE_FRONT);
 	return (blockchain);

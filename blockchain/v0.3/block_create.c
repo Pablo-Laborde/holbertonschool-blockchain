@@ -19,6 +19,7 @@ block_t *block_create(block_t const *prev, int8_t const *data,
 	nb = malloc(sizeof(block_t));
 	if (!nb)
 		return (NULL);
+	memset(nb, 0, sizeof(block_t));
 	nb->info.index = prev->info.index + 1;
 	nb->info.difficulty = 0;
 	nb->info.timestamp = time(NULL);
