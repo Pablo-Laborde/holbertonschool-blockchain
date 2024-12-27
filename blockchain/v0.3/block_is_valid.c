@@ -2,12 +2,23 @@
 
 
 /**
- * block_is_valid- func
- * @block: block_t const *
- * @prev_block: block_t const *
- * Return: int
+ * block_is_valid -		check that each Block’s hash is valid
+ *
+ * @block:				block to check if hash is valid
+ *
+ * @prev_block:			previous block to check referenced hashes
+ *
+ * @all_unspent:		transactions list to check
+ *
+ * Return:				EXIT_SUCCESS or EXIT_FAILURE
+ *
+ * A block must contain at least one transaction (at least the coinbase
+ * transaction)
+ *
+ * The first transaction in a Block must be a valid coinbase transaction
  */
-int block_is_valid(block_t const *block, block_t const *prev_block)
+int block_is_valid(block_t const *block, block_t const *prev_block,
+	llist_t *all_unspent)
 {
 	if (!block)
 		return (EXIT_FAILURE);
@@ -19,6 +30,13 @@ int block_is_valid(block_t const *block, block_t const *prev_block)
 	if (block->info.index && check_block(block, prev_block))
 		return (EXIT_FAILURE);
 	if (!hash_matches_difficulty(block->hash, block->info.difficulty))
+		return (EXIT_FAILURE);
+	if (!llist_size(block->transactions))
+		return (EXIT_FAILURE);
+	if (!transaction_is_valid(block->transactions, all_unspent))
+		return (EXIT_FAILURE);
+	if (!coinbase_is_valid(llist_get_head(block->transactions,
+			block->info.index)))
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }

@@ -121,7 +121,8 @@ typedef struct blockchain_s
 	int save_block(block_t *block, uint32_t index, FILE *fd);
 	blockchain_t *blockchain_deserialize(char const *path);
 	block_t *rebuild_block(FILE *fd);
-	int block_is_valid(block_t const *block, block_t const *prev_block);
+	int block_is_valid(block_t const *block, block_t const *prev_block,
+		llist_t *all_unspent);
 	int compare_to_genesis(block_t const *block);
 	int check_block(block_t const *block, block_t const *prev_block);
 
