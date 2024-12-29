@@ -140,6 +140,7 @@ typedef struct blockchain_s
 	int save_out(tx_out_t *out, uint32_t index, FILE *fd);
 	int save_unspent(unspent_tx_out_t *uto, uint32_t index, FILE *fd);
 	unspent_tx_out_t *rebuild_uto(FILE *fd);
+	blockchain_t *rebuild_lists(blockchain_t *blockchain, FILE *fd);
 
 
 

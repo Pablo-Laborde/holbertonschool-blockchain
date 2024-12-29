@@ -9,11 +9,8 @@
 blockchain_t *blockchain_deserialize(char const *path)
 {
 	uint8_t buffer[8], header[8] = "\x48\x42\x4c\x4b\x30\x2e\x33\x1";
-	int32_t no_blocks = 0, no_unspent = 0, i = 0, j = 0;
 	FILE *fd = NULL;
-	block_t *block = NULL;
 	blockchain_t *blockchain = NULL;
-	unspent_tx_out_t *uto = NULL;
 
 	if (!path)
 		return (NULL);
@@ -24,8 +21,6 @@ blockchain_t *blockchain_deserialize(char const *path)
 	fread(buffer, sizeof(uint8_t), 8, fd);
 	if (memcmp(buffer, header, 8))
 		return (NULL);
-	fread(&no_blocks, sizeof(uint32_t), 1, fd);
-	fread(&no_unspent, sizeof(uint32_t), 1, fd);
 	blockchain = malloc(sizeof(blockchain_t));
 	if (!blockchain)
 		return (NULL);
@@ -35,6 +30,27 @@ blockchain_t *blockchain_deserialize(char const *path)
 		blockchain_destroy(blockchain);
 		return (NULL);
 	}
+	else
+		blockchain->unspent = NULL;
+	fclose(fd);
+	return (blockchain);
+}
+
+
+/**
+ * rebuild_lists -		rebuilds lists
+ * @blockchain:			pointer to blockchain
+ * @fd:					stream to read from
+ * Return:				NULL on failure, pointer to the blockchain in success
+ */
+blockchain_t *rebuild_lists(blockchain_t *blockchain, FILE *fd)
+{
+	int32_t no_blocks = 0, no_unspent = 0, i = 0, j = 0;
+	unspent_tx_out_t *uto = NULL;
+	block_t *block = NULL;
+
+	fread(&no_blocks, sizeof(uint32_t), 1, fd);
+	fread(&no_unspent, sizeof(uint32_t), 1, fd);
 	for (; i < no_blocks; i++)
 	{
 		block = rebuild_block(fd);
@@ -62,9 +78,6 @@ blockchain_t *blockchain_deserialize(char const *path)
 			}
 		}
 	}
-	else
-		blockchain->unspent = NULL;
-	fclose(fd);
 	return (blockchain);
 }
 
