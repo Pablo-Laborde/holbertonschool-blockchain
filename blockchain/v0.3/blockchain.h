@@ -135,6 +135,12 @@ typedef struct blockchain_s
 
 /* v0.3 */
 	int cpy_tx(transaction_t *tx, int idx, uint8_t *buf);
+	int save_tx(transaction_t *tx, uint32_t index, FILE *fd);
+	int save_in(tx_in_t *in, uint32_t index, FILE *fd);
+	int save_out(tx_out_t *out, uint32_t index, FILE *fd);
+	int save_unspent(unspent_tx_out_t *uto, uint32_t index, FILE *fd);
+	unspent_tx_out_t *rebuild_uto(FILE *fd);
+
 
 
 #endif

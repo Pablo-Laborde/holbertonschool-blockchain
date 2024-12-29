@@ -9,10 +9,11 @@
 blockchain_t *blockchain_deserialize(char const *path)
 {
 	uint8_t buffer[8], header[8] = "\x48\x42\x4c\x4b\x30\x2e\x33\x1";
-	uint32_t no_blocks = 0, i = 0;
+	int32_t no_blocks = 0, no_unspent = 0, i = 0, j = 0;
 	FILE *fd = NULL;
 	block_t *block = NULL;
 	blockchain_t *blockchain = NULL;
+	unspent_tx_out_t *uto = NULL;
 
 	if (!path)
 		return (NULL);
@@ -24,10 +25,11 @@ blockchain_t *blockchain_deserialize(char const *path)
 	if (memcmp(buffer, header, 8))
 		return (NULL);
 	fread(&no_blocks, sizeof(uint32_t), 1, fd);
+	fread(&no_unspent, sizeof(uint32_t), 1, fd);
 	blockchain = malloc(sizeof(blockchain_t));
 	if (!blockchain)
 		return (NULL);
-	blockchain->chain = llist_create(0);
+	blockchain->chain = llist_create(MT_SUPPORT_FALSE);
 	if (!blockchain->chain)
 	{
 		blockchain_destroy(blockchain);
@@ -42,6 +44,26 @@ blockchain_t *blockchain_deserialize(char const *path)
 			return (NULL);
 		}
 	}
+	if (no_unspent >= 0)
+	{
+		blockchain->unspent = llist_create(MT_SUPPORT_FALSE);
+		if (!blockchain->unspent)
+		{
+			blockchain_destroy(blockchain);
+			return (NULL);
+		}
+		for (; j < no_unspent; j++)
+		{
+			uto = rebuild_uto(fd);
+			if (llist_add_node(blockchain->unspent, uto, ADD_NODE_REAR) == -1)
+			{
+				blockchain_destroy(blockchain);
+				return (NULL);
+			}
+		}
+	}
+	else
+		blockchain->unspent = NULL;
 	fclose(fd);
 	return (blockchain);
 }
@@ -64,4 +86,40 @@ block_t *rebuild_block(FILE *fd)
 	fread(&block->data, sizeof(uint8_t), block->data.len, fd);
 	fread(block->hash, sizeof(uint8_t), SHA256_DIGEST_LENGTH, fd);
 	return (block);
+}
+
+
+/**
+ * rebuild_uto- func
+ * @fd: FILE *
+ * Return: unspent_tx_out_t *
+ */
+unspent_tx_out_t *rebuild_uto(FILE *fd)
+{
+	unspent_tx_out_t *uto = NULL;
+
+	uto = malloc(sizeof(unspent_tx_out_t));
+	if (!uto)
+		return (NULL);
+	fread(&uto, sizeof(unspent_tx_out_t), 1, fd);
+	return (uto);
+}
+
+
+/**
+ * save_unspent -	serializes an unspent transaction
+ *
+ * @uto:			transaction to serialize
+ *
+ * @index:			transactions index
+ *
+ * @fd:				file descriptor to write data
+ *
+ * Return:			an integer
+ */
+int save_unspent(unspent_tx_out_t *uto, uint32_t index, FILE *fd)
+{
+	(void)index;
+	fwrite(uto, sizeof(uint8_t), sizeof(unspent_tx_out_t), fd);
+	return (0);
 }
