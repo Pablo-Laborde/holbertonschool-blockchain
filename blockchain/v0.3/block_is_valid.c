@@ -20,6 +20,9 @@
 int block_is_valid(block_t const *block, block_t const *prev_block,
 	llist_t *all_unspent)
 {
+	int size = 0, i = 0;
+	transaction_t const *tx = NULL;
+
 	if (!block)
 		return (EXIT_FAILURE);
 	if ((!block->info.index && prev_block) ||
@@ -31,13 +34,20 @@ int block_is_valid(block_t const *block, block_t const *prev_block,
 		return (EXIT_FAILURE);
 	if (!hash_matches_difficulty(block->hash, block->info.difficulty))
 		return (EXIT_FAILURE);
-	if (!llist_size(block->transactions))
+	size = llist_size(block->transactions);
+	if (!size)
 		return (EXIT_FAILURE);
-	if (!transaction_is_valid(block->transactions, all_unspent))
-		return (EXIT_FAILURE);
-	if (!coinbase_is_valid(llist_get_head(block->transactions,
-			block->info.index)))
-		return (EXIT_FAILURE);
+	for (; i < size; i++)
+	{
+		tx = llist_get_node_at(block->transactions, i);
+		if (!i)
+		{
+			if (!coinbase_is_valid(tx, block->info.index))
+				return (EXIT_FAILURE);
+		}
+		else if (!transaction_is_valid(tx, all_unspent))
+			return (EXIT_FAILURE);
+	}
 	return (EXIT_SUCCESS);
 }
 
@@ -85,10 +95,18 @@ int check_block(block_t const *block, block_t const *prev_block)
 
 	if (block->info.index != (prev_block->info.index + 1))
 		return (EXIT_FAILURE);
-	if (!block_hash(prev_block, digest))
-		return (EXIT_FAILURE);
-	if (memcmp(prev_block->hash, digest, SHA256_DIGEST_LENGTH))
-		return (EXIT_FAILURE);
+	if (!prev_block->info.index)
+	{
+		if (memcmp(prev_block, &_genesis, sizeof(_genesis)))
+			return (EXIT_FAILURE);
+	}
+	else
+	{
+		if (!block_hash(prev_block, digest))
+			return (EXIT_FAILURE);
+		if (memcmp(prev_block->hash, digest, SHA256_DIGEST_LENGTH))
+			return (EXIT_FAILURE);
+	}
 	if (memcmp(block->info.prev_hash, prev_block->hash, SHA256_DIGEST_LENGTH))
 		return (EXIT_FAILURE);
 	if (!block_hash(block, digest))
