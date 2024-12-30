@@ -137,7 +137,7 @@ int check_owner(unspent_tx_out_t *node, uint8_t pub[EC_PUB_LEN])
 
 
 /**
- * transaction_failure - 	manages failure
+ * transaction_failure -	manages failure
  *
  * @transaction:			transaction node to free
  *

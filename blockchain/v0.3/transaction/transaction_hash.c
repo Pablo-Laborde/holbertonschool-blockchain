@@ -16,7 +16,7 @@
  * The transaction ID must be a hash of a buffer containing the following
  * information:
  *		Each input’s block_hash (32 bytes), tx_id (32 bytes) and tx_out_hash
- * 		(32 bytes), followed by
+ *		(32 bytes), followed by
  *
  *		Each output’s hash (32 bytes)
  *
