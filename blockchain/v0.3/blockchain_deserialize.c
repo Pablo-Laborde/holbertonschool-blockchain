@@ -24,14 +24,8 @@ blockchain_t *blockchain_deserialize(char const *path)
 	blockchain = malloc(sizeof(blockchain_t));
 	if (!blockchain)
 		return (NULL);
-	blockchain->chain = llist_create(MT_SUPPORT_FALSE);
-	if (!blockchain->chain)
-	{
-		blockchain_destroy(blockchain);
+	if (!rebuild_lists(blockchain, fd))
 		return (NULL);
-	}
-	else
-		blockchain->unspent = NULL;
 	fclose(fd);
 	return (blockchain);
 }
@@ -51,6 +45,12 @@ blockchain_t *rebuild_lists(blockchain_t *blockchain, FILE *fd)
 
 	fread(&no_blocks, sizeof(uint32_t), 1, fd);
 	fread(&no_unspent, sizeof(uint32_t), 1, fd);
+	blockchain->chain = llist_create(MT_SUPPORT_FALSE);
+	if (!blockchain->chain)
+	{
+		blockchain_destroy(blockchain);
+		return (NULL);
+	}
 	for (; i < no_blocks; i++)
 	{
 		block = rebuild_block(fd);
@@ -78,6 +78,8 @@ blockchain_t *rebuild_lists(blockchain_t *blockchain, FILE *fd)
 			}
 		}
 	}
+	else
+		blockchain->unspent = NULL;
 	return (blockchain);
 }
 
