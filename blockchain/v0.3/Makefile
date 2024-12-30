@@ -4,7 +4,7 @@ CCFLAGS = -c -Wall -Wextra -Werror -pedantic -g3 -I. -Itransaction/ -Iprovided/ 
 AR = ar
 ARFLAGS = rcs
 NAME = libhblk_blockchain.a
-SRC = $(wildcard *.c) $(wildcard provided/*.c) $(wildcard transaction/*.c)
+SRC = $(wildcard *.c) $(wildcard transaction/*.c) provided/_genesis.c
 OBJ = $(SRC:.c=.o)
 
 
