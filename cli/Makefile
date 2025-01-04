@@ -1,17 +1,19 @@
 .PHONY: all clean
 CC = gcc
+#SRC = $(wildcard *.c)
+SRC = cli.c wallet.c var.c op.c
 FLAGS = -Wall -Werror -Wextra -pedantic -g -pthread
-CRY = -I../crypto -L../crypto -lhblk_crypto
-BCHAIN = -I../blockchain/v0.3 -L../blockchain/v0.3 -lhblk_blockchain
-LINKER = -lssl -lcrypto
+BCHAIN = -lhblk_blockchain -L../blockchain/v0.3 -I../blockchain/v0.3
+CRY = -lhblk_crypto -L../crypto -I../crypto
+LINKER = -lcrypto -lllist -lssl
 
 NAME = cli
-SRC = $(wildcard *.c)
+
 
 
 #default
 all:
-	$(CC) $(FLAGS) $(CRY) $(SRC) $(LINKER) -o $(NAME)
+	$(CC) $(SRC) $(FLAGS) $(BCHAIN) $(CRY) $(LINKER) -o $(NAME)
 
 
 #clean
