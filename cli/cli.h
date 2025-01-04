@@ -32,9 +32,11 @@
 		EC_KEY *wallet_load(char *path);
 		void wallet_save(EC_KEY *key, char *path);
 
-	/* op.c */
-		transaction_t *send(EC_KEY *sender, char **arg, llist_t *all_unspent);
+	/* send.c */
+		transaction_t *send(EC_KEY *sender, char **arg, llist_t *all_unspent,
+			llist_t *local_pool);
 		int check_num(char *str);
+		void *send_error(int error);
 
 
 

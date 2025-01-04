@@ -26,7 +26,7 @@ int main(void)
 			else if (x == 1)
 				wallet_save(wallet, cmd[1]);
 			else if (x == 2)
-				send(wallet, &cmd[1], all_unspent);
+				send(wallet, &cmd[1], all_unspent, local_pool);
 			else if (x == 7)
 				exit = 1;
 		}
