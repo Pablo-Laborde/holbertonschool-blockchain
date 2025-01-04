@@ -13,7 +13,10 @@ EC_KEY *wallet_load(char *path)
 	EC_KEY *key = NULL;
 
 	if (!path)
+	{
+		printf("No path specified.\n");
 		return (NULL);
+	}
 	key = ec_load(path);
 	if (key)
 		printf("Key loaded.\n");
