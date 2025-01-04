@@ -1,7 +1,7 @@
 .PHONY: all clean
 CC = gcc
 #SRC = $(wildcard *.c)
-SRC = cli.c wallet.c var.c op.c
+SRC = cli.c wallet.c var.c send.c
 FLAGS = -Wall -Werror -Wextra -pedantic -g -pthread
 BCHAIN = -lhblk_blockchain -L../blockchain/v0.3 -I../blockchain/v0.3
 CRY = -lhblk_crypto -L../crypto -I../crypto
