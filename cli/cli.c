@@ -118,9 +118,10 @@ int select_cmd(char *command)
 	if (!command)
 		return (-1);
 	while (cmd_name[i])
+	{
 		if (!strcmp(cmd_name[i], command))
 			return (i);
-		else
-			i++;
+		i++;
+	}
 	return (-1);
 }
