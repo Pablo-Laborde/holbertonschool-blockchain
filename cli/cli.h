@@ -15,6 +15,10 @@
 	#include "../blockchain/v0.3/blockchain.h"
 
 
+/* Variables */
+
+	extern char const *cmd_name[];
+
 
 /* Functions */
 
@@ -27,6 +31,10 @@
 	/* wallet.c */
 		EC_KEY *wallet_load(char *path);
 		void wallet_save(EC_KEY *key, char *path);
+
+	/* op.c */
+		transaction_t *send(EC_KEY *sender, char **arg, llist_t *all_unspent);
+		int check_num(char *str);
 
 
 
