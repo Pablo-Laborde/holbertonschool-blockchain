@@ -2,23 +2,6 @@
 
 
 
-
-/**
- * 
- */
-char const *cmd_name[8] = {
-	"wallet_load",
-	"wallet_save",
-	"send",
-	"mine",
-	"info",
-	"load",
-	"save",
-	NULL
-};
-
-
-
 /**
  * main -		command line interpreter
  *
@@ -26,28 +9,31 @@ char const *cmd_name[8] = {
  */
 int main(void)
 {
-	char *cmd[3];
-	int am_arg = 0, x = 0;
+	char *cmd[3] = {NULL, NULL, NULL};
+	int am_arg = 0, x = 0, exit = 0;
 	EC_KEY *wallet = NULL;
+	llist_t *all_unspent = NULL, *local_pool = NULL;
 
 	cli_usage();
-	memset(cmd, 0, 24);
-	while (1)
+	while (!exit)
 	{
-		write(1, "cmd > ", 6);
 		am_arg = cmd_maker(cmd);
-		if (am_arg > 3)
-			cli_usage();
-		else
+		if (am_arg < 4)
 		{
 			x = select_cmd(cmd[0]);
 			if (x == 0)
 				wallet = wallet_load(cmd[1]);
 			else if (x == 1)
 				wallet_save(wallet, cmd[1]);
+			else if (x == 2)
+				send(wallet, &cmd[1], all_unspent);
+			else if (x == 7)
+				exit = 1;
 		}
 		cmd_clean(cmd);
 	}
+	(void)all_unspent;
+	(void)local_pool;
 	return (0);
 }
 
@@ -64,6 +50,7 @@ int cmd_maker(char **cmd)
 	char *str = NULL, *buffer = NULL;
 	size_t size = 0, am_arg = 0;
 
+	write(1, "cmd > ", 6);
 	getline(&buffer, &size, stdin);
 	str = strtok(buffer, " \n");
 	while (str)
@@ -74,6 +61,8 @@ int cmd_maker(char **cmd)
 		am_arg++;
 	}
 	free(buffer);
+	if (am_arg > 3)
+		cli_usage();
 	return ((int)am_arg);
 }
 
@@ -111,7 +100,7 @@ void cli_usage(void)
 	printf("\tinfo\n");
 	printf("\tload <path>\n");
 	printf("\tsave <path>\n");
-	printf("\tto exit press Ctrl + C\n");
+	printf("\texit\n");
 }
 
 
