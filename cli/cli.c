@@ -12,9 +12,12 @@ int main(void)
 	char *cmd[3] = {NULL, NULL, NULL};
 	int am_arg = 0, x = 0, exit = 0;
 	EC_KEY *wallet = NULL;
-	llist_t *all_unspent = NULL, *local_pool = NULL;
+	llist_t *local_pool = NULL;
+	blockchain_t *blockchain = NULL;
 
 	cli_usage();
+	blockchain = blockchain_create();
+	local_pool = llist_create(MT_SUPPORT_FALSE);
 	while (!exit)
 	{
 		am_arg = cmd_maker(cmd);
@@ -26,14 +29,18 @@ int main(void)
 			else if (x == 1)
 				wallet_save(wallet, cmd[1]);
 			else if (x == 2)
-				send(wallet, &cmd[1], all_unspent, local_pool);
+				send(wallet, &cmd[1], blockchain->unspent, local_pool);
+			else if (x == 3)
+				mine(local_pool, blockchain, wallet);
+			else if (x == 4)
+				info(blockchain, local_pool);
 			else if (x == 7)
 				exit = 1;
 		}
 		cmd_clean(cmd);
 	}
-	(void)all_unspent;
-	(void)local_pool;
+	blockchain_destroy(blockchain);
+	llist_destroy(local_pool, 1, (node_dtor_t)transaction_destroy);
 	return (0);
 }
 

@@ -38,6 +38,15 @@
 		int check_num(char *str);
 		void *send_error(int error);
 
+	/* mine.c */
+		block_t *mine(llist_t *local_pool, blockchain_t *blockchain,
+			EC_KEY *receiver);
+		int search_tx(transaction_t *tx, transaction_t *aux);
+		void purge_tx(llist_t *local_pool, llist_t *unspent);
+
+	/* info.c */
+		void info(blockchain_t *blockchain, llist_t *local_pool);
+
 
 
 #endif
