@@ -1,5 +1,5 @@
-#ifndef BLOCKCHAIN_V0_2
-#define BLOCKCHAIN_V0_2
+#ifndef BLOCKCHAIN_V0_3
+#define BLOCKCHAIN_V0_3
 
 
 
