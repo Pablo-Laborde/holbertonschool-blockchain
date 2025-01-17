@@ -219,6 +219,7 @@ typedef struct in_signer_s
 /* update_unspent.c */
 	llist_t *update_unspent(llist_t *transactions,
 		uint8_t block_hash[SHA256_DIGEST_LENGTH], llist_t *all_unspent);
+	int purge_unspent(unspent_tx_out_t *uto, tx_in_t *in_tx);
 
 
 #endif
