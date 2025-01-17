@@ -52,10 +52,7 @@ llist_t *update_unspent(llist_t *transactions,
 			out = llist_get_node_at(tx->outputs, j);
 			node = unspent_tx_out_create(block_hash, tx->id, out);
 			if (!node)
-			{
-				llist_destroy(new_unspent, 1, NULL);
 				return (NULL);
-			}
 			llist_add_node(new_unspent, (llist_node_t)node, ADD_NODE_REAR);
 		}
 	}
