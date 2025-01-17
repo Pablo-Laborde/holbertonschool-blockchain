@@ -75,7 +75,7 @@ llist_t *update_unspent(llist_t *transactions,
  */
 int purge_unspent(unspent_tx_out_t *uto, tx_in_t *in_tx)
 {
-	if (!memcmp(uto, in_tx, 2 * SHA256_DIGEST_LENGTH) && 
+	if (!memcmp(uto, in_tx, 2 * SHA256_DIGEST_LENGTH) &&
 		!memcmp(uto->out.hash, in_tx->tx_out_hash, SHA256_DIGEST_LENGTH))
 		return (1);
 	return (0);
