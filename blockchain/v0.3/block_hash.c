@@ -20,7 +20,7 @@ uint8_t *block_hash(block_t const *block,
 		return (NULL);
 	b_length += sizeof(block_info_t) + block->data.len;
 	tx_size = llist_size(block->transactions);
-	t_length = b_length + tx_size * 32;
+	t_length = b_length + tx_size * SHA256_DIGEST_LENGTH;
 	buf = malloc(t_length);
 	if (!buf)
 		return (NULL);
@@ -48,8 +48,8 @@ int cpy_tx(transaction_t *tx, int idx, uint8_t *buf)
 {
 	int pos = 0;
 
-	pos = 32 * idx;
-	memcpy(buf + pos, tx, 32);
+	pos = SHA256_DIGEST_LENGTH * idx;
+	memcpy(buf + pos, tx, SHA256_DIGEST_LENGTH);
 	return (0);
 }
 
