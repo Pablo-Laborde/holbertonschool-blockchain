@@ -69,3 +69,21 @@ void hex_dump(void *data, unsigned int len)
 		byte_print(byte[i]);
 	}
 }
+
+
+/**
+ * hex_str -	prints len bytes starting at data in hexadecimal representation
+ * @data:		pointer to the data to be printed
+ * @len:		length of the data to be printed, amount of nodes
+ * Return:		void
+ */
+void hex_str(void *data, unsigned int len)
+{
+	unsigned int i = 0;
+	uint8_t *byte = data;
+
+	if (!data)
+		return;
+	for (; i < len; i++)
+		byte_print(byte[i]);
+}
