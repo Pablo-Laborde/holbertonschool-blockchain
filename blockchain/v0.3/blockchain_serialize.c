@@ -59,8 +59,8 @@ int save_block(block_t *block, uint32_t index, FILE *fd)
 	(void)index;
 	fwrite(block, sizeof(uint8_t), 56, fd);
 	fwrite(&block->data.len, sizeof(uint8_t), 4, fd);
-	fwrite(&block->data.buffer, sizeof(uint8_t), block->data.len, fd);
-	fwrite(&block->hash, sizeof(uint8_t), SHA256_DIGEST_LENGTH, fd);
+	fwrite(block->data.buffer, sizeof(uint8_t), block->data.len, fd);
+	fwrite(block->hash, sizeof(uint8_t), SHA256_DIGEST_LENGTH, fd);
 	if (block->transactions)
 	{
 		size = llist_size(block->transactions);
