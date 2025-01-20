@@ -140,7 +140,7 @@ unspent_tx_out_t *rebuild_uto(FILE *fd)
 	if (!uto)
 		return (NULL);
 	memset(uto, 0, sizeof(unspent_tx_out_t));
-	fread(&uto, sizeof(unspent_tx_out_t), 1, fd);
+	fread(uto, sizeof(unspent_tx_out_t), 1, fd);
 	return (uto);
 }
 
