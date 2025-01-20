@@ -50,7 +50,7 @@ int main(void)
 		printf("\n");
 	}
 
-	blockchain_serialize(bc, "blockchain_save.sv");
+	blockchain_serialize(bc, "bc_save.sv");
 	blockchain_destroy(bc);
 	return (0);
 }
