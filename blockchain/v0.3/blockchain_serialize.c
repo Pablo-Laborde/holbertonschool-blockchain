@@ -27,9 +27,9 @@ int blockchain_serialize(blockchain_t const *blockchain, char const *path)
 		return (-1);
 	fprintf(fd, "HBLK0.3\x01");
 	no_blocks = llist_size(blockchain->chain);
-	fwrite(&no_blocks, sizeof(uint8_t), 4, fd);
+	fwrite(&no_blocks, sizeof(uint32_t), 1, fd);
 	no_blocks = llist_size(blockchain->unspent);
-	fwrite(&no_blocks, sizeof(uint8_t), 4, fd);
+	fwrite(&no_blocks, sizeof(uint32_t), 1, fd);
 	if (llist_for_each(blockchain->chain, (node_func_t)save_block, fd) == -1)
 		return (-1);
 	if (llist_for_each(blockchain->unspent, (node_func_t)save_unspent, fd)
@@ -57,14 +57,14 @@ int save_block(block_t *block, uint32_t index, FILE *fd)
 	uint32_t size = 0;
 
 	(void)index;
-	fwrite(block, sizeof(uint8_t), 56, fd);
-	fwrite(&block->data.len, sizeof(uint8_t), 4, fd);
+	fwrite(block, sizeof(uint8_t), sizeof(block_info_t), fd);
+	fwrite(&block->data.len, sizeof(uint32_t), 1, fd);
 	fwrite(block->data.buffer, sizeof(uint8_t), block->data.len, fd);
 	fwrite(block->hash, sizeof(uint8_t), SHA256_DIGEST_LENGTH, fd);
 	if (block->transactions)
 	{
 		size = llist_size(block->transactions);
-		fwrite(&size, sizeof(uint8_t), 4, fd);
+		fwrite(&size, sizeof(uint32_t), 1, fd);
 		if (llist_for_each(block->transactions, (node_func_t)save_tx, fd)
 				== -1)
 			return (-1);
@@ -72,7 +72,7 @@ int save_block(block_t *block, uint32_t index, FILE *fd)
 	else
 	{
 		size = -1;
-		fwrite(&size, sizeof(uint8_t), 4, fd);
+		fwrite(&size, sizeof(uint32_t), 1, fd);
 	}
 	return (0);
 }
@@ -96,9 +96,9 @@ int save_tx(transaction_t *tx, uint32_t index, FILE *fd)
 	(void)index;
 	fwrite(tx->id, sizeof(uint8_t), SHA256_DIGEST_LENGTH, fd);
 	size = llist_size(tx->inputs);
-	fwrite(&size, sizeof(uint8_t), 4, fd);
+	fwrite(&size, sizeof(uint32_t), 1, fd);
 	size = llist_size(tx->outputs);
-	fwrite(&size, sizeof(uint8_t), 4, fd);
+	fwrite(&size, sizeof(uint32_t), 1, fd);
 	if (llist_for_each(tx->inputs, (node_func_t)save_in, fd) == -1)
 		return (-1);
 	if (llist_for_each(tx->outputs, (node_func_t)save_out, fd) == -1)
