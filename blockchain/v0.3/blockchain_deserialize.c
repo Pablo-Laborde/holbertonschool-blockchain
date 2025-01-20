@@ -8,7 +8,7 @@
  */
 blockchain_t *blockchain_deserialize(char const *path)
 {
-	uint8_t buffer[8], header[8] = "\x48\x42\x4c\x4b\x30\x2e\x33\x1";
+	uint8_t buffer[8], header[8] = "\x48\x42\x4c\x4b\x30\x2e\x33\x01";
 	FILE *fd = NULL;
 	blockchain_t *blockchain = NULL;
 
@@ -54,7 +54,8 @@ blockchain_t *rebuild_lists(blockchain_t *blockchain, FILE *fd)
 	for (; i < no_blocks; i++)
 	{
 		block = rebuild_block(fd);
-		if (llist_add_node(blockchain->chain, block, ADD_NODE_REAR) == -1)
+		if (llist_add_node(blockchain->chain, (llist_node_t)block,
+			ADD_NODE_REAR) == -1)
 		{
 			blockchain_destroy(blockchain);
 			return (NULL);
@@ -71,7 +72,8 @@ blockchain_t *rebuild_lists(blockchain_t *blockchain, FILE *fd)
 		for (; j < no_unspent; j++)
 		{
 			uto = rebuild_uto(fd);
-			if (llist_add_node(blockchain->unspent, uto, ADD_NODE_REAR) == -1)
+			if (llist_add_node(blockchain->unspent, (llist_node_t)uto,
+				ADD_NODE_REAR) == -1)
 			{
 				blockchain_destroy(blockchain);
 				return (NULL);
@@ -91,15 +93,36 @@ blockchain_t *rebuild_lists(blockchain_t *blockchain, FILE *fd)
  */
 block_t *rebuild_block(FILE *fd)
 {
+	int32_t i = 0, size = 0;
 	block_t *block = NULL;
+	transaction_t *tx = NULL;
 
 	block = malloc(sizeof(block_t));
 	if (!block)
 		return (NULL);
-	fread(&block->info, sizeof(uint8_t), 56, fd);
+	memset(block, 0, sizeof(block_t));
+	fread(&block->info, sizeof(block_info_t), 1, fd);
 	fread(&block->data.len, sizeof(uint32_t), 1, fd);
-	fread(&block->data, sizeof(uint8_t), block->data.len, fd);
+	fread(block->data.buffer, sizeof(int8_t), block->data.len, fd);
 	fread(block->hash, sizeof(uint8_t), SHA256_DIGEST_LENGTH, fd);
+	fread(&size, sizeof(uint32_t), 1, fd);
+	if (size == -1)
+		block->transactions = NULL;
+	else
+	{
+		block->transactions = llist_create(MT_SUPPORT_FALSE);
+		for (; i < size; i++)
+		{
+			tx = rebuild_tx(fd);
+			if (!tx)
+			{
+				block_destroy(block);
+				return (NULL);
+			}
+			llist_add_node(block->transactions, (llist_node_t)tx,
+				ADD_NODE_REAR);
+		}
+	}
 	return (block);
 }
 
@@ -116,6 +139,7 @@ unspent_tx_out_t *rebuild_uto(FILE *fd)
 	uto = malloc(sizeof(unspent_tx_out_t));
 	if (!uto)
 		return (NULL);
+	memset(uto, 0, sizeof(unspent_tx_out_t));
 	fread(&uto, sizeof(unspent_tx_out_t), 1, fd);
 	return (uto);
 }
@@ -135,6 +159,6 @@ unspent_tx_out_t *rebuild_uto(FILE *fd)
 int save_unspent(unspent_tx_out_t *uto, uint32_t index, FILE *fd)
 {
 	(void)index;
-	fwrite(uto, sizeof(uint8_t), sizeof(unspent_tx_out_t), fd);
+	fwrite(uto, sizeof(unspent_tx_out_t), 1, fd);
 	return (0);
 }
