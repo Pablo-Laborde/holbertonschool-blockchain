@@ -1,11 +1,13 @@
 .PHONY: all clean
 CC = gcc
 #SRC = $(wildcard *.c)
-SRC = cli.c wallet.c var.c send.c mine.c info.c
+SRC = cli.c wallet.c var.c send.c mine.c info.c ls_blockchain.c
 FLAGS = -Wall -Werror -Wextra -pedantic -g -pthread
 BCHAIN = -lhblk_blockchain -L../blockchain/v0.3 -I../blockchain/v0.3
 CRY = -lhblk_crypto -L../crypto -I../crypto
+HEX = hex/hex.c
 LINKER = -lcrypto -lllist -lssl
+OLD_SRC = $(wildcard oldie/*.c)
 
 NAME = cli
 BGEN = ../blockchain/v0.3/provided/_genesis.c
@@ -14,7 +16,12 @@ BGEN = ../blockchain/v0.3/provided/_genesis.c
 
 #default
 all:
-	$(CC) $(SRC) $(BGEN) $(FLAGS) $(BCHAIN) $(CRY) $(LINKER) -o $(NAME)
+	$(CC) $(SRC) $(BGEN) $(FLAGS) $(BCHAIN) $(CRY) $(LINKER) $(HEX) -o $(NAME)
+
+
+#old version
+old:
+	$(CC) $(OLD_SRC) $(BGEN) $(FLAGS) $(BCHAIN) $(CRY) $(LINKER) $(HEX) -o old_cli
 
 
 #clean
