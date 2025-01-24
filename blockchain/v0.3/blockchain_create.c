@@ -90,7 +90,13 @@ tx_in_t *rebuild_tx_in(FILE *fd)
 	in = malloc(sizeof(tx_in_t));
 	if (!in)
 		return (NULL);
-	fread(in, sizeof(tx_in_t), 1, fd);
+	memset(in, 0, sizeof(tx_in_t));
+	/* fread(in, sizeof(tx_in_t), 1, fd); */
+	fread(in->block_hash, sizeof(uint8_t), SHA256_DIGEST_LENGTH, fd);
+	fread(in->tx_id, sizeof(uint8_t), SHA256_DIGEST_LENGTH, fd);
+	fread(in->tx_out_hash, sizeof(uint8_t), SHA256_DIGEST_LENGTH, fd);
+	fread(in->sig.sig, sizeof(uint8_t), SIG_MAX_LEN, fd);
+	fread(&in->sig.len, sizeof(uint8_t), 1, fd);
 	return (in);
 }
 
@@ -107,6 +113,10 @@ tx_out_t *rebuild_tx_out(FILE *fd)
 	out = malloc(sizeof(tx_out_t));
 	if (!out)
 		return (NULL);
-	fread(out, sizeof(tx_out_t), 1, fd);
+	memset(out, 0, sizeof(tx_out_t));
+	/* fread(out, sizeof(tx_out_t), 1, fd); */
+	fread(&out->amount, sizeof(uint32_t), 1, fd);
+	fread(out->pub, sizeof(uint8_t), EC_PUB_LEN, fd);
+	fread(out->hash, sizeof(uint8_t), SHA256_DIGEST_LENGTH, fd);
 	return (out);
 }

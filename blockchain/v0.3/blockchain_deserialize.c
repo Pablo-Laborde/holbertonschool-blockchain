@@ -140,7 +140,12 @@ unspent_tx_out_t *rebuild_uto(FILE *fd)
 	if (!uto)
 		return (NULL);
 	memset(uto, 0, sizeof(unspent_tx_out_t));
-	fread(uto, sizeof(unspent_tx_out_t), 1, fd);
+	/* fread(uto, sizeof(unspent_tx_out_t), 1, fd); */
+	fread(uto->block_hash, sizeof(uint8_t), SHA256_DIGEST_LENGTH, fd);
+	fread(uto->tx_id, sizeof(uint8_t), SHA256_DIGEST_LENGTH, fd);
+	fread(&uto->out.amount, sizeof(uint32_t), 1, fd);
+	fread(uto->out.pub, sizeof(uint8_t), EC_PUB_LEN, fd);
+	fread(uto->out.hash, sizeof(uint8_t), SHA256_DIGEST_LENGTH, fd);
 	return (uto);
 }
 
@@ -159,6 +164,11 @@ unspent_tx_out_t *rebuild_uto(FILE *fd)
 int save_unspent(unspent_tx_out_t *uto, uint32_t index, FILE *fd)
 {
 	(void)index;
-	fwrite(uto, sizeof(unspent_tx_out_t), 1, fd);
+	/* fwrite(uto, sizeof(unspent_tx_out_t), 1, fd); */
+	fwrite(uto->block_hash, sizeof(uint8_t), SHA256_DIGEST_LENGTH, fd);
+	fwrite(uto->tx_id, sizeof(uint8_t), SHA256_DIGEST_LENGTH, fd);
+	fwrite(&uto->out.amount, sizeof(uint32_t), 1, fd);
+	fwrite(uto->out.pub, sizeof(uint8_t), EC_PUB_LEN, fd);
+	fwrite(uto->out.hash, sizeof(uint8_t), SHA256_DIGEST_LENGTH, fd);
 	return (0);
 }

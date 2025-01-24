@@ -121,7 +121,12 @@ int save_tx(transaction_t *tx, uint32_t index, FILE *fd)
 int save_in(tx_in_t *in, uint32_t index, FILE *fd)
 {
 	(void)index;
-	fwrite(in, sizeof(uint8_t), sizeof(tx_in_t), fd);
+	/* fwrite(in, sizeof(uint8_t), sizeof(tx_in_t), fd); */
+	fwrite(in->block_hash, sizeof(uint8_t), SHA256_DIGEST_LENGTH, fd);
+	fwrite(in->tx_id, sizeof(uint8_t), SHA256_DIGEST_LENGTH, fd);
+	fwrite(in->tx_out_hash, sizeof(uint8_t), SHA256_DIGEST_LENGTH, fd);
+	fwrite(in->sig.sig, sizeof(uint8_t), SIG_MAX_LEN, fd);
+	fwrite(&in->sig.len, sizeof(uint8_t), 1, fd);
 	return (0);
 }
 
@@ -140,6 +145,9 @@ int save_in(tx_in_t *in, uint32_t index, FILE *fd)
 int save_out(tx_out_t *out, uint32_t index, FILE *fd)
 {
 	(void)index;
-	fwrite(out, sizeof(uint8_t), sizeof(tx_out_t), fd);
+	/* fwrite(out, sizeof(uint8_t), sizeof(tx_out_t), fd); */
+	fwrite(&out->amount, sizeof(uint32_t), 1, fd);
+	fwrite(out->pub, sizeof(uint8_t), EC_PUB_LEN, fd);
+	fwrite(out->hash, sizeof(uint8_t), SHA256_DIGEST_LENGTH, fd);
 	return (0);
 }
