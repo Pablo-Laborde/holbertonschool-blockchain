@@ -2,6 +2,9 @@
 
 /* Array with the functions names. */
 char const *alpha_opt[] = {
+	"wallet_load",
+	"wallet_create",
+	"wallet_save",
 	"help",
 	"exit",
 	NULL
@@ -10,6 +13,9 @@ char const *alpha_opt[] = {
 
 /* Array with functions pointers. */
 int (*alpha_func[])(clid_t *) = {
+	load_wallet,
+	create_wallet,
+	save_wallet,
 	basic_help,
 	exit_cli,
 	NULL
