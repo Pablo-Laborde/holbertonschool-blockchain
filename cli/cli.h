@@ -44,7 +44,8 @@ typedef struct dcoin_s
 typedef struct cli_data_s
 {
 	char *av[3];
-	EC_KEY *owner;
+	char *path;
+	EC_KEY *key;
 	uint8_t exit_cli;
 } clid_t;
 
@@ -71,6 +72,7 @@ typedef struct cli_data_s
 		int load_wallet(clid_t *d);
 		int create_wallet(clid_t *d);
 		int save_wallet(clid_t *d);
+		int w_error(int no);
 
 	/* send.c */
 
