@@ -5,6 +5,9 @@ char const *alpha_opt[] = {
 	"wallet_load",
 	"wallet_create",
 	"wallet_save",
+
+	"load",
+	"save",
 	"help",
 	"exit",
 	NULL
@@ -16,6 +19,9 @@ int (*alpha_func[])(clid_t *) = {
 	load_wallet,
 	create_wallet,
 	save_wallet,
+
+	load_blockchain,
+	save_blockchain,
 	basic_help,
 	exit_cli,
 	NULL

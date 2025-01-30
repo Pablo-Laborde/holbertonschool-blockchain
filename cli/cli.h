@@ -44,8 +44,8 @@ typedef struct dcoin_s
 typedef struct cli_data_s
 {
 	char *av[3];
-	char *path;
 	EC_KEY *key;
+	blockchain_t *bc;
 	uint8_t exit_cli;
 } clid_t;
 
@@ -80,7 +80,10 @@ typedef struct cli_data_s
 
 	/* info.c */
 
-	/* ls_blockchain.c */
+	/* ls_chain.c */
+		int load_blockchain(clid_t *d);
+		int save_blockchain(clid_t *d);
+		int lsb_error(int no);
 
 
 
