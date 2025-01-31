@@ -31,6 +31,8 @@ int save_blockchain(clid_t *d)
 		return (lsb_error(20));
 	if (!d->av[1])
 		return (lsb_error(21));
+	if (!d->bc)
+		return (lsb_error(24));
 	if (blockchain_serialize(d->bc, d->av[1]))
 		return (lsb_error(23));
 	return (0);
@@ -52,5 +54,7 @@ int lsb_error(int no)
 		printf("Couldn't deserialize blockchain. Check if path is valid.\n");
 	else if (no == 23)
 		printf("Couldn't serialize blockchain. Check if path is valid.\n");
+	else if (no == 24)
+		printf("No blockchain initialized.\n");
 	return (no);
 }

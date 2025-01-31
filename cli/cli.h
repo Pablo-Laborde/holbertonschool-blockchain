@@ -76,6 +76,9 @@ typedef struct cli_data_s
 		int w_error(int no);
 
 	/* send.c */
+		int send(clid_t *d);
+		int check_num(char *str);
+		int s_error(int no);
 
 	/* mine.c */
 
