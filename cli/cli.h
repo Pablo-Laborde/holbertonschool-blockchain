@@ -46,6 +46,7 @@ typedef struct cli_data_s
 	char *av[3];
 	EC_KEY *key;
 	blockchain_t *bc;
+	llist_t *local_pool;
 	uint8_t exit_cli;
 } clid_t;
 
@@ -79,6 +80,14 @@ typedef struct cli_data_s
 	/* mine.c */
 
 	/* info.c */
+		int info(clid_t *d);
+		int i_error(int no);
+
+	/* info_d.c */
+		int print_dist(clid_t *d);
+		int compute_node(unspent_tx_out_t *node, int idx, dcoin_t **d_hash);
+		void free_hash(dcoin_t **d_hash);
+		void print_hash(dcoin_t **d_hash);
 
 	/* ls_chain.c */
 		int load_blockchain(clid_t *d);
