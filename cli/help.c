@@ -16,6 +16,7 @@ int basic_help(clid_t *d)
 	printf("\tsend <amount> <address>\n");
 	printf("\tmine\n");
 	printf("\tinfo\n");
+	printf("\tcoin_distribution\n");
 	printf("\tload <path>\n");
 	printf("\tsave <path>\n");
 	printf("\thelp\n");
