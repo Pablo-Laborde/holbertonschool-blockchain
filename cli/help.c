@@ -18,6 +18,7 @@ int basic_help(clid_t *d)
 	printf("\tsend <amount> <address>\n");
 
 	printf("\tmine\n");
+	printf("\tbc_init\n");
 
 	printf("\tinfo\n");
 	printf("\tcoin_distribution\n");

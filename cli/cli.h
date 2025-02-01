@@ -81,6 +81,11 @@ typedef struct cli_data_s
 		int s_error(int no);
 
 	/* mine.c */
+		int mine(clid_t *d);
+		int bc_init(clid_t *d);
+		int search_tx(transaction_t *tx, transaction_t *aux);
+		void purge_tx(llist_t *local_pool, llist_t *unspent);
+		int m_error(int no);
 
 	/* info.c */
 		int info(clid_t *d);
