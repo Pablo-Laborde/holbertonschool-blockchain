@@ -62,6 +62,7 @@ int bc_init(clid_t *d)
 	d->bc = blockchain_create();
 	if (!d->bc)
 		return (m_error(52));
+	printf("Blockchain initialized.\n");
 	return (0);
 }
 

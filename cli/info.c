@@ -38,5 +38,9 @@ int i_error(int no)
 {
 	if (no == 30)
 		printf("No struct with data specified.\n");
+	if (no == 31)
+		printf("No blockchain initialized.\n");
+	if (no == 32)
+		printf("No node at the specified index.\n");
 	return (no);
 }

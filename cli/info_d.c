@@ -13,6 +13,8 @@ int print_dist(clid_t *d)
 
 	if (!d)
 		return (i_error(30));
+	if (!d->bc)
+		return (i_error(31));
 	memset(d_hash, 0, sizeof(dcoin_t *) * 256);
 	llist_for_each(d->bc->unspent, (node_func_t)compute_node, d_hash);
 	print_hash(d_hash);

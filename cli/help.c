@@ -22,11 +22,15 @@ int basic_help(clid_t *d)
 
 	printf("\tinfo\n");
 	printf("\tcoin_distribution\n");
+	printf("\tbc_init\n");
+	printf("\tprint_block <block index>\n");
 
 	printf("\tload <path>\n");
 	printf("\tsave <path>\n");
 
 	printf("\thelp\n");
 	printf("\texit\n");
+	/* for (; alpha_opt[i]; i++)
+		printf("\t%s\n", alpha_opt[i]); */
 	return (0);
 }

@@ -12,7 +12,9 @@ char const *alpha_opt[] = {
 	"bc_init",
 
 	"info",
-	"coin_distribution",
+	"coin_dist",
+	"bc_dist",
+	"print_block",
 
 	"load",
 	"save",
@@ -36,6 +38,8 @@ int (*alpha_func[])(clid_t *) = {
 
 	info,
 	print_dist,
+	bc_dist,
+	print_block,
 
 	load_blockchain,
 	save_blockchain,
