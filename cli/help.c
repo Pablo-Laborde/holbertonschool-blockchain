@@ -28,6 +28,7 @@ int basic_help(clid_t *d)
 	printf("\tload <path>\n");
 	printf("\tsave <path>\n");
 
+	printf("\tfree_data\n");
 	printf("\thelp\n");
 	printf("\texit\n");
 	/* for (; alpha_opt[i]; i++)

@@ -19,6 +19,7 @@ char const *alpha_opt[] = {
 	"load",
 	"save",
 
+	"free_data",
 	"help",
 	"exit",
 	NULL
@@ -44,6 +45,7 @@ int (*alpha_func[])(clid_t *) = {
 	load_blockchain,
 	save_blockchain,
 
+	free_data,
 	basic_help,
 	exit_cli,
 	NULL

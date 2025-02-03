@@ -24,5 +24,29 @@ int main(void)
 			free_args(d.av);
 		}
 	}
+	free_data(&d);
+	return (0);
+}
+
+
+/**
+ * free_data -	Frees all data inside the struct.
+ * @d:			Struct containing all data.
+ * Return:		0 on succes, non zero otherwise.
+ */
+int free_data(clid_t *d)
+{
+	if (!d)
+		return (1);
+	if (d->av[0])
+		free_args(d->av);
+	if (d->key)
+		free(d->key);
+	if (d->bc)
+		blockchain_destroy(d->bc);
+	if (d->local_pool)
+		llist_destroy(d->local_pool, 1, (node_dtor_t)transaction_destroy);
+	memset(d, 0, sizeof(clid_t));
+	printf("All data set to 0.\n");
 	return (0);
 }

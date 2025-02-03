@@ -58,6 +58,7 @@ typedef struct cli_data_s
 /* Functions */
 
 	/* cli.c */
+		int free_data(clid_t *d);
 
 	/* command.c */
 		int get_input(char **av);
