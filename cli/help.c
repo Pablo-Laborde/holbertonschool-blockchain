@@ -22,7 +22,7 @@ int basic_help(clid_t *d)
 
 	printf("\tinfo\n");
 	printf("\tcoin_distribution\n");
-	printf("\tbc_init\n");
+	printf("\tbc_dist\n");
 	printf("\tprint_block <block index>\n");
 
 	printf("\tload <path>\n");
