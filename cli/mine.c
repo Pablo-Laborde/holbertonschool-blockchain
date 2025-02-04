@@ -37,7 +37,7 @@ int mine(clid_t *d)
 			ADD_NODE_REAR);
 	}
 	block_mine(block);
-	if (!block_is_valid(block, prev, d->bc->unspent))
+	if (block_is_valid(block, prev, d->bc->unspent))
 	{
 		block_destroy(block);
 		return (m_error(54));
