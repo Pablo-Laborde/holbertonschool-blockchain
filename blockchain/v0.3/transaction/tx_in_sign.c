@@ -15,7 +15,7 @@
  *					transaction input
  *
  * @all_unspent:	is the list of all unspent transaction outputs to date
-
+ *
  * Your function must verify the public key derived from the private key in
  * sender matches the public key stored in the transaction output referenced
  * by the transaction input to be signed
@@ -23,7 +23,7 @@
  * Your function must sign the ID of the transaction tx_id the transaction
  * input is stored in, using sender‘s private key
  *
- * Your function must return a pointer to the resulting signature structure
+ * Return:			Pointer to the resulting signature structure
  * upon success, or NULL upon failure
  */
 sig_t *tx_in_sign(tx_in_t *in, uint8_t const tx_id[SHA256_DIGEST_LENGTH],
