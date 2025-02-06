@@ -9,6 +9,7 @@
  */
 int ec_save(EC_KEY *key, char const *folder)
 {
+	int i = 0;
 	char *afolder = NULL, *bf = NULL;
 
 	if (!key || !folder)
@@ -22,8 +23,11 @@ int ec_save(EC_KEY *key, char const *folder)
 		mkdir(afolder, 0777);
 		chdir(afolder);
 		afolder = strtok(NULL, "/");
+		i++;
 	}
 	free(bf);
+	for (; i > 0; i--)
+		chdir("..");
 	if (ec_save_public(key) || ec_save_private(key))
 		return (0);
 	return (1);
