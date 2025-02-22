@@ -43,7 +43,6 @@ typedef struct dcoin_s
  */
 typedef struct cli_data_s
 {
-	char p_mode;
 	char *av[3];
 	EC_KEY *key;
 	blockchain_t *bc;
