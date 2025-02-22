@@ -42,5 +42,9 @@ int i_error(int no)
 		printf("No blockchain initialized.\n");
 	if (no == 32)
 		printf("No node at the specified index.\n");
+	if (no == 33)
+		printf("No local pool.\n");
+	if (no == 34)
+		printf("No unspent list available.\n");
 	return (no);
 }

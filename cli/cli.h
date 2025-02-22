@@ -43,6 +43,7 @@ typedef struct dcoin_s
  */
 typedef struct cli_data_s
 {
+	char p_mode;
 	char *av[3];
 	EC_KEY *key;
 	blockchain_t *bc;
@@ -82,6 +83,7 @@ typedef struct cli_data_s
 	/* send.c */
 		int send(clid_t *d);
 		int check_num(char *str);
+		uint8_t *unhex(char *s);
 		int s_error(int no);
 
 	/* mine.c */
@@ -110,6 +112,13 @@ typedef struct cli_data_s
 	/* info_e.c */
 		int bc_dist(clid_t *d);
 		int print_brief(block_t *b, int idx, void *arg);
+
+	/* info_t.c */
+		int print_lp(clid_t *d);
+
+	/* info_u.c */
+		int print_unspent(clid_t *d);
+		int print_uto(unspent_tx_out_t *uto, int idx, void *arg);
 
 	/* ls_chain.c */
 		int load_blockchain(clid_t *d);

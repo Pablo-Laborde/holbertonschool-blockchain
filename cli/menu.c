@@ -9,13 +9,15 @@ char const *alpha_opt[] = {
 	"send",
 
 	"mine",
-	"bc_init",
 
 	"info",
 	"coin_dist",
 	"bc_dist",
 	"print_block",
+	"print_local_pool",
+	"print_unspent",
 
+	"bc_init",
 	"load",
 	"save",
 
@@ -35,13 +37,15 @@ int (*alpha_func[])(clid_t *) = {
 	send,
 
 	mine,
-	bc_init,
 
 	info,
 	print_dist,
 	bc_dist,
 	print_block,
+	print_lp,
+	print_unspent,
 
+	bc_init,
 	load_blockchain,
 	save_blockchain,
 

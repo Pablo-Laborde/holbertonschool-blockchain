@@ -55,7 +55,7 @@ int print_tx(transaction_t *tx, int idx, void *arg)
 	HEX(tx->id, SHA256_DIGEST_LENGTH);
 	printf("\n");
 	llist_for_each(tx->inputs, (node_func_t)print_in, NULL);
-	llist_for_each(tx->outputs, (node_func_t)print_in, NULL);
+	llist_for_each(tx->outputs, (node_func_t)print_out, NULL);
 	return (0);
 }
 
@@ -76,11 +76,11 @@ int print_in(tx_in_t *in, int idx, void *arg)
 	fflush(NULL);
 	HEX(in->block_hash, SHA256_DIGEST_LENGTH);
 	printf("\n");
-	printf("block_hash:");
+	printf("tx_id:");
 	fflush(NULL);
 	HEX(in->tx_id, SHA256_DIGEST_LENGTH);
 	printf("\n");
-	printf("block_hash:");
+	printf("tx_out_hash:");
 	fflush(NULL);
 	HEX(in->tx_out_hash, SHA256_DIGEST_LENGTH);
 	printf("\n");
@@ -107,6 +107,7 @@ int print_out(tx_out_t *out, int idx, void *arg)
 	printf("pub:");
 	fflush(NULL);
 	HEX(out->pub, EC_PUB_LEN);
+	printf("\n");
 	printf("hash:");
 	fflush(NULL);
 	HEX(out->hash, SHA256_DIGEST_LENGTH);

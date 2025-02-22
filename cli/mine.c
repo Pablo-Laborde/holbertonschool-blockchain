@@ -46,6 +46,7 @@ int mine(clid_t *d)
 	aux = update_unspent(block->transactions, block->hash, d->bc->unspent);
 	if (!aux)
 		return (m_error(55));
+	d->bc->unspent = aux;
 	return (0);
 }
 
@@ -60,6 +61,7 @@ int bc_init(clid_t *d)
 	if (!d)
 		return (m_error(50));
 	d->bc = blockchain_create();
+	d->local_pool = llist_create(MT_SUPPORT_FALSE);
 	if (!d->bc)
 		return (m_error(52));
 	printf("Blockchain initialized.\n");
