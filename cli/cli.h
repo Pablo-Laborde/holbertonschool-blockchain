@@ -43,6 +43,7 @@ typedef struct dcoin_s
  */
 typedef struct cli_data_s
 {
+	char p_mode;
 	char *av[3];
 	EC_KEY *key;
 	blockchain_t *bc;
@@ -63,6 +64,7 @@ typedef struct cli_data_s
 	/* command.c */
 		int get_input(char **av);
 		void free_args(char **av);
+		int ch_print_mode(clid_t *d);
 
 	/* help.c */
 		int basic_help(clid_t *d);

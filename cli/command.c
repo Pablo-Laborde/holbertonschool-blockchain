@@ -47,3 +47,15 @@ void free_args(char **av)
 			free(av[i]);
 	memset(av, 0, 24);
 }
+
+
+/**
+ * ch_print_mode -	Changes the printing mode.
+ * @d:			Struct containing all data.
+ * Return:		0 on succes, non zero otherwise.
+ */
+int ch_print_mode(clid_t *d)
+{
+	d->p_mode = (d->p_mode) ? 0 : 1;
+	return (0);
+}

@@ -11,6 +11,7 @@ char const *alpha_opt[] = {
 	"mine",
 
 	"info",
+	"change_print_mode",
 	"coin_dist",
 	"bc_dist",
 	"print_block",
@@ -39,6 +40,7 @@ int (*alpha_func[])(clid_t *) = {
 	mine,
 
 	info,
+	ch_print_mode,
 	print_dist,
 	bc_dist,
 	print_block,

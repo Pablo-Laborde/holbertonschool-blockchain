@@ -22,6 +22,7 @@ int basic_help(clid_t *d)
 
 	printf("\nInfo:\n");
 	printf("\tinfo\n");
+	printf("\tchange_print_mode");
 	printf("\tcoin_distribution\n");
 	printf("\tbc_dist\n");
 	printf("\tprint_block <block index>\n");
