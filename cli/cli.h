@@ -98,28 +98,29 @@ typedef struct cli_data_s
 		int info(clid_t *d);
 		int i_error(int no);
 
-	/* info_b.c */
-		int print_block(clid_t *d);
-		int print_tx(transaction_t *tx, int idx, void *arg);
-		int print_in(tx_in_t *in, int idx, void *arg);
-		int print_out(tx_out_t *out, int idx, void *arg);
-
 	/* info_d.c */
 		int print_dist(clid_t *d);
 		int compute_node(unspent_tx_out_t *node, int idx, dcoin_t **d_hash);
 		void free_hash(dcoin_t **d_hash);
 		void print_hash(dcoin_t **d_hash);
 
-	/* info_e.c */
-		int bc_dist(clid_t *d);
-		int print_brief(block_t *b, int idx, void *arg);
-
-	/* info_t.c */
-		int print_lp(clid_t *d);
-
 	/* info_u.c */
 		int print_unspent(clid_t *d);
-		int print_uto(unspent_tx_out_t *uto, int idx, void *arg);
+		int pb_uto(unspent_tx_out_t *uto, int idx, void *arg);
+		int pc_uto(unspent_tx_out_t *uto, int idx, void *arg);
+
+	/* info_block.c */
+		int print_block(clid_t *d);
+		int bc_dist(clid_t *d);
+		int pb_block(block_t *b, int idx, void *arg);
+		int pc_block(block_t *b, int idx, void *arg);
+
+	/* info_tx.c */
+		int print_lp(clid_t *d);
+		int pb_tx(transaction_t *tx, int idx, void *arg);
+		int pc_tx(transaction_t *tx, int idx, void *arg);
+		int pc_in(tx_in_t *in, int idx, void *arg);
+		int pc_out(tx_out_t *out, int idx, void *arg);
 
 	/* ls_chain.c */
 		int load_blockchain(clid_t *d);
