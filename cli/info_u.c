@@ -9,6 +9,8 @@
  */
 int print_unspent(clid_t *d)
 {
+	int (*func)(unspent_tx_out_t *, int, void *) = NULL;
+
 	if (!d)
 		return (i_error(30));
 	if (!d->bc)
@@ -17,30 +19,56 @@ int print_unspent(clid_t *d)
 		return (i_error(34));
 	if (!llist_size(d->bc->unspent))
 		printf("Empty unspent list.\n");
-	llist_for_each(d->bc->unspent, (node_func_t)print_uto, NULL);
+	else
+	{
+		func = (d->p_mode) ? pc_uto : pb_uto;
+		printf("<--- Unspent Transaction List --->\n");
+		llist_for_each(d->bc->unspent, (node_func_t)func, NULL);
+		printf("<--- Unspent Transaction List End --->\n");
+	}
 	return (0);
 }
 
 
 /**
- * print_uto -	Prints an unspent node.
- * @uto:		Node to print.
+ * pb_uto -		Print an unspent transaction briefly.
+ * @uto:		Transaction to print.
  * @idx:		Node index, not used.
  * @arg:		NULL
- * Return:		An integer.
+ * Return:		Int.
  */
-int print_uto(unspent_tx_out_t *uto, int idx, void *arg)
+int pb_uto(unspent_tx_out_t *uto, int idx, void *arg)
 {
-	(void)idx;
 	(void)arg;
-	printf("Block Hash: ");
+	(void)idx;
+	printf("Hash: ");
+	fflush(NULL);
+	HEXS(uto->block_hash, SHA256_DIGEST_LENGTH);
+	printf("\n");
+	return (0);
+}
+
+
+/**
+ * pc_uto -		Print an unspent transaction completely.
+ * @uto:		Transaction to print.
+ * @idx:		Node index, not used.
+ * @arg:		NULL
+ * Return:		Int.
+ */
+int pc_uto(unspent_tx_out_t *uto, int idx, void *arg)
+{
+	(void)arg;
+	(void)idx;
+	printf("Hash: ");
 	fflush(NULL);
 	HEX(uto->block_hash, SHA256_DIGEST_LENGTH);
 	printf("\n");
-	printf("Tx id: ");
+	printf("Tx Id: ");
 	fflush(NULL);
 	HEX(uto->tx_id, SHA256_DIGEST_LENGTH);
 	printf("\n");
-	print_out(&uto->out, 0, NULL);
+	pc_out(&uto->out, 0, NULL);
 	return (0);
 }
+ 
