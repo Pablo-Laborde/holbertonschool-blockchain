@@ -41,7 +41,7 @@ int (*alpha_func[])(clid_t *) = {
 
 	info,
 	ch_print_mode,
-	print_dist,
+	coin_dist,
 	bc_dist,
 	print_block,
 	print_lp,

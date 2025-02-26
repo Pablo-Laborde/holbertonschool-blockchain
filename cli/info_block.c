@@ -42,7 +42,9 @@ int bc_dist(clid_t *d)
 	if (!d->bc)
 		return (i_error(31));
 	func = (d->p_mode) ? pc_block : pb_block;
+	printf("<--- Blockchain Begin --->\n");
 	llist_for_each(d->bc->chain, (node_func_t)func, NULL);
+	printf("<--- Blockchain End --->\n\n");
 	return (0);
 }
 

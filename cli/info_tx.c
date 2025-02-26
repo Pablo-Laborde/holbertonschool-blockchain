@@ -22,7 +22,7 @@ int print_lp(clid_t *d)
 		func = (d->p_mode) ? pc_tx : pb_tx;
 		printf("<--- Local Pool List --->\n");
 		llist_for_each(d->local_pool, (node_func_t)func, NULL);
-		printf("<--- Local Pool List End --->\n");
+		printf("<--- Local Pool List End --->\n\n");
 	}
 	return (0);
 }

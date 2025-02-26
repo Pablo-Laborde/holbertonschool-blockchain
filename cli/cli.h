@@ -99,10 +99,11 @@ typedef struct cli_data_s
 		int i_error(int no);
 
 	/* info_d.c */
-		int print_dist(clid_t *d);
-		int compute_node(unspent_tx_out_t *node, int idx, dcoin_t **d_hash);
-		void free_hash(dcoin_t **d_hash);
-		void print_hash(dcoin_t **d_hash);
+		int coin_dist(clid_t *d);
+		int compute_node(unspent_tx_out_t *node, int idx, dcoin_t **clist);
+		dcoin_t *search_pos(dcoin_t *clist, unspent_tx_out_t *node);
+		void free_dcoin_list(dcoin_t *clist);
+		void print_dcoin_list(dcoin_t *clist);
 
 	/* info_u.c */
 		int print_unspent(clid_t *d);
