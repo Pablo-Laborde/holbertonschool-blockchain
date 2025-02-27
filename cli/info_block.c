@@ -91,6 +91,10 @@ int pc_block(block_t *b, int idx, void *arg)
 	printf("Difficulty: %d\n", b->info.difficulty);
 	printf("Timestamp: %ld\n", b->info.timestamp);
 	printf("Nonce: %ld\n", b->info.nonce);
+	printf("Previous Hash:");
+	fflush(NULL);
+	HEX(b->info.prev_hash, SHA256_DIGEST_LENGTH);
+	printf("\n");
 	printf("Block Data:\n");
 	printf("Buffer: %s\n", b->data.buffer);
 	printf("Buffer length: %d\n", b->data.len);
