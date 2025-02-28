@@ -59,6 +59,7 @@ typedef struct cli_data_s
 /* Functions */
 
 	/* cli.c */
+		int bc_init(clid_t *d);
 		int free_data(clid_t *d);
 
 	/* command.c */
@@ -89,8 +90,7 @@ typedef struct cli_data_s
 
 	/* mine.c */
 		int mine(clid_t *d);
-		int bc_init(clid_t *d);
-		int search_tx(transaction_t *tx, transaction_t *aux);
+		int search_tx(transaction_t *tx, llist_t *unspent);
 		void purge_tx(llist_t *local_pool, llist_t *unspent);
 		int m_error(int no);
 

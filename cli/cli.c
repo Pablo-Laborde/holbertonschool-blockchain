@@ -30,6 +30,24 @@ int main(void)
 
 
 /**
+ * mine -	Initializes a blockchain.
+ * @d:		Struct containing all data.
+ * Return:	0 on succes, non zero otherwise.
+ */
+int bc_init(clid_t *d)
+{
+	if (!d)
+		return (m_error(50));
+	d->bc = blockchain_create();
+	d->local_pool = llist_create(MT_SUPPORT_FALSE);
+	if (!d->bc)
+		return (m_error(52));
+	printf("Blockchain initialized.\n");
+	return (0);
+}
+
+
+/**
  * free_data -	Frees all data inside the struct.
  * @d:			Struct containing all data.
  * Return:		0 on succes, non zero otherwise.

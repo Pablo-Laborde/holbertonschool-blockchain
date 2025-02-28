@@ -52,35 +52,17 @@ int mine(clid_t *d)
 
 
 /**
- * mine -	Initializes a blockchain.
- * @d:		Struct containing all data.
- * Return:	0 on succes, non zero otherwise.
- */
-int bc_init(clid_t *d)
-{
-	if (!d)
-		return (m_error(50));
-	d->bc = blockchain_create();
-	d->local_pool = llist_create(MT_SUPPORT_FALSE);
-	if (!d->bc)
-		return (m_error(52));
-	printf("Blockchain initialized.\n");
-	return (0);
-}
-
-
-/**
  * search_tx -	checks wether the current node is the one looked for
  *
- * @tx:			transaction node of the list
+ * @local_pool:	list of transactions
  *
- * @aux:		transaction node as reference
+ * @unspent:	list of unspent transactions
  *
  * Return:		an integer
  */
-int search_tx(transaction_t *tx, transaction_t *aux)
+int search_tx(transaction_t *tx, llist_t *unspent)
 {
-	return (!memcmp(tx, aux, SHA256_DIGEST_LENGTH));
+	return (!transaction_is_valid(tx, unspent));
 }
 
 
@@ -95,22 +77,14 @@ int search_tx(transaction_t *tx, transaction_t *aux)
  */
 void purge_tx(llist_t *local_pool, llist_t *unspent)
 {
-	int i = 0, size = 0;
-	transaction_t *tx = NULL;
+	int sa = 0, sb = 0;
 
-	size = llist_size(local_pool);
-	while (i < size)
-	{
-		tx = llist_get_node_at(local_pool, i);
-		if (!transaction_is_valid(tx, unspent))
-		{
-			llist_remove_node(local_pool, (node_ident_t)search_tx, tx, 1,
-				(node_dtor_t)transaction_destroy);
-			i--;
-			size--;
-		}
-		i++;
-	}
+	do {
+		sa = llist_size(local_pool);
+		llist_remove_node(local_pool, (node_ident_t)search_tx,
+			unspent, 1, (node_dtor_t)transaction_destroy);
+		sb = llist_size(local_pool);
+	} while (sb < sa);
 }
 
 
