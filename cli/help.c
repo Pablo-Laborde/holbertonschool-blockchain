@@ -38,7 +38,9 @@ int basic_help(clid_t *d)
 	printf("\tfree_data\n");
 	printf("\thelp\n");
 	printf("\texit\n");
-	/* for (; alpha_opt[i]; i++)
-		printf("\t%s\n", alpha_opt[i]); */
+	/*
+	* for (; alpha_opt[i]; i++)
+	*	printf("\t%s\n", alpha_opt[i]);
+	*/
 	return (0);
 }

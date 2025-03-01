@@ -71,4 +71,3 @@ int pc_uto(unspent_tx_out_t *uto, int idx, void *arg)
 	pc_out(&uto->out, 0, NULL);
 	return (0);
 }
- 

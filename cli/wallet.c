@@ -28,7 +28,9 @@ int load_wallet(clid_t *d)
 			if ((ans != 'y') && (ans != 'n'))
 				printf("No valid input.\n");
 			if (ans == 'y')
+			{
 				return (create_wallet(d));
+			}
 			else
 				break;
 			while ((ans != 0) && (ans != '\n'))
